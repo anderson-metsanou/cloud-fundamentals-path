@@ -9,101 +9,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Slate & Sky Blue -->
-    <!-- Application Structure Plan: A single-page, vertical timeline/dashboard. The user starts with a high-level summary (key stats, a time-split chart, and progress tracker) and can then scroll down through a detailed, module-by-module breakdown. Each module is an interactive accordion, allowing users to expand and collapse content to focus on specific areas. A sticky sidebar provides quick navigation with scrollspy to highlight the active section. This structure was chosen to mirror a typical learning syllabus, making it intuitive for students to follow a linear path while still allowing non-linear exploration via the navigation and persistent progress tracking for a "pro LMS" feel. -->
-    <!-- Visualization & Content Choices:
-        - Report Info: Total Duration, Sessions, Labs -> Goal: Inform -> Viz/Method: Dynamic stat cards -> Interaction: None -> Justification: Provides a quick, scannable overview of the course commitment.
-        - Report Info: Time split between Sessions and Labs -> Goal: Compare -> Viz/Method: Donut Chart (Chart.js) -> Interaction: Hover for tooltips -> Justification: Visually represents the balance between theoretical and practical work.
-        - Report Info: Modules, Sessions, Labs details -> Goal: Organize/Inform -> Viz/Method: Interactive Accordion (HTML/CSS/JS) with distinct styling for sessions/labs -> Interaction: Click to expand/collapse, "Mark module complete" button -> Justification: Manages information density, allows progressive disclosure, and enhances user interaction for progress tracking.
-        - Report Info: Overall structure -> Goal: Navigate -> Viz/Method: Sticky Sidebar Navigation with Scrollspy -> Interaction: Click to scroll, automatic active state -> Justification: Enhances usability by providing constant access to all course sections and visually indicates current position.
-        - Report Info: Progress Tracking -> Goal: Monitor progress -> Viz/Method: Progress Bar, localStorage -> Interaction: Checkboxes, "Mark module complete" button -> Justification: Provides persistent feedback on learning advancement.
-        - Theming: Dark Mode Toggle -> Goal: User Preference -> Viz/Method: HTML class toggle with Tailwind -> Interaction: Click toggle button -> Justification: Enhances accessibility and user comfort.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .light {
-            background-color: #f8fafc; /* slate-50 */
-            color: #334155; /* slate-700 */
-        }
-        .dark {
-            background-color: #1e293b; /* slate-800 */
-            color: #e2e8f0; /* slate-200 */
-        }
-        .light .bg-white { background-color: white; }
-        .dark .bg-white { background-color: #334155; } /* slate-700 */
-        .light .bg-slate-50 { background-color: #f8fafc; }
-        .dark .bg-slate-50 { background-color: #3f51b5; } /* indigo-500 */
-        .light .bg-slate-100 { background-color: #f1f5f9; }
-        .dark .bg-slate-100 { background-color: #475569; } /* slate-600 */
-        .light .bg-slate-200 { background-color: #e2e8f0; }
-        .dark .bg-slate-200 { background-color: #64748b; } /* slate-500 */
-        .light .text-slate-800 { color: #1e293b; }
-        .dark .text-slate-800 { color: #f8fafc; }
-        .light .text-slate-700 { color: #334155; }
-        .dark .text-slate-700 { color: #cbd5e1; }
-        .light .text-slate-600 { color: #475569; }
-        .dark .text-slate-600 { color: #94a3b8; }
-        .light .text-slate-500 { color: #64748b; }
-        .dark .text-slate-500 { color: #a0aec0; }
-        .light .border-slate-200 { border-color: #e2e8f0; }
-        .dark .border-slate-200 { border-color: #475569; }
-        .light .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
-        .dark .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2); }
 
-        .module-card {
-            transition: all 0.3s ease-in-out;
-        }
-        .module-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
-        .module-card.open .module-content {
-            max-height: 1000px; /* Adjust as needed */
-        }
-        .sticky-nav a.active {
-            background-color: #0284c7; /* sky-600 */
-            color: white;
-            font-weight: 600;
-        }
-        .sticky-nav a:not(.active):hover {
-            background-color: #e0f2fe; /* sky-100 */
-        }
-        .dark .sticky-nav a:not(.active):hover {
-            background-color: #38bdf8; /* sky-400 */
-            color: #1e293b;
-        }
-        .progress-bar-fill {
-            transition: width 0.5s ease-in-out;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 300px;
-        }
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .light { background-color: #f8fafc; color: #334155; }
+        .dark { background-color: #1e293b; color: #e2e8f0; }
+        .light .bg-white { background-color: white; }
+        .dark .bg-white { background-color: #334155; }
+        .light .bg-slate-50 { background-color: #f8fafc; }
+        .dark .bg-slate-50 { background-color: #3f51b5; }
+        .module-card { transition: all 0.3s ease-in-out; }
+        .module-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+        .module-card.open .module-content { max-height: 1000px; }
+        .progress-bar-fill { transition: width 0.5s ease-in-out; }
+        .chart-container { position: relative; width: 100%; max-width: 300px; margin: auto; height: 300px; }
     </style>
 </head>
 <body class="antialiased">
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-
         <header class="text-center mb-12 relative">
             <h1 class="text-4xl md:text-5xl font-bold text-slate-800">☁️ CloudCoach Fundamentals</h1>
             <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">An interactive learning path designed to take you from core concepts to hands-on deployment.</p>
-            <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500 transition-colors">
+            <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none">
                 <span id="theme-icon" class="text-xl">🌙</span>
             </button>
         </header>
 
         <div class="flex flex-col md:flex-row gap-8">
-            
             <aside class="md:w-1/4 md:sticky top-8 self-start">
                 <nav id="sticky-nav" class="bg-white p-4 rounded-lg shadow-md">
                     <h3 class="font-bold text-lg mb-3 text-slate-700">Course Navigation</h3>
@@ -116,7 +49,8 @@
             <main class="md:w-3/4">
                 <section id="overview" class="mb-12 p-6 bg-white rounded-lg shadow-md">
                     <h2 class="text-2xl font-bold text-slate-800 mb-4">Path Overview</h2>
-                    <p class="text-slate-600 mb-6">This comprehensive path will guide you through 29 hours of curated content, blending theoretical sessions with practical, hands-on labs to solidify your understanding. Use the checkboxes to track your progress!</p>
+                    <p class="text-slate-600 mb-6">This path blends theory with practice. Use checkboxes and "Mark Module Complete" to track your learning.</p>
+                    
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         <div class="bg-slate-100 p-4 rounded-lg text-center">
                             <div class="text-3xl font-bold text-sky-600" id="total-duration">29</div>
@@ -128,22 +62,22 @@
                         </div>
                         <div class="bg-slate-100 p-4 rounded-lg text-center">
                             <div class="text-3xl font-bold text-sky-600" id="total-labs">10</div>
-                            <div class="text-sm text-slate-500">Labs & Projects</div>
+                            <div class="text-sm text-slate-500">Labs</div>
                         </div>
                         <div class="bg-slate-100 p-4 rounded-lg text-center">
                             <div class="text-3xl font-bold text-sky-600" id="total-modules">8</div>
                             <div class="text-sm text-slate-500">Modules</div>
                         </div>
                     </div>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
                         <div>
                             <h3 class="text-xl font-semibold text-slate-700 mb-2">Learning Time Distribution</h3>
-                            <p class="text-slate-600">The course is structured to provide a balanced learning experience, with a significant portion dedicated to hands-on labs to ensure you can apply the concepts you learn.</p>
+                            <p class="text-slate-600">Balanced between theory and labs.</p>
                         </div>
-                        <div class="chart-container">
-                            <canvas id="timeSplitChart"></canvas>
-                        </div>
+                        <div class="chart-container"><canvas id="timeSplitChart"></canvas></div>
                     </div>
+
                     <div class="mt-8">
                         <h3 class="text-xl font-semibold text-slate-700 mb-2">Your Overall Progress</h3>
                         <div class="w-full bg-slate-200 rounded-full h-4">
@@ -153,16 +87,13 @@
                     </div>
                 </section>
 
-                <div id="learning-path" class="space-y-6">
-                </div>
-
+                <div id="learning-path" class="space-y-6"></div>
             </main>
         </div>
     </div>
 
     <script>
     async function loadModules() {
-        // Charger la liste des modules
         const response = await fetch("modules.json");
         const list = await response.json();
         const modules = [];
@@ -175,18 +106,13 @@
 
     document.addEventListener('DOMContentLoaded', async function () {
         const learningPathData = await loadModules();
-
         const learningPathContainer = document.getElementById('learning-path');
         const navList = document.querySelector('#sticky-nav ul');
         const progressBar = document.getElementById('progress-bar');
         const progressText = document.getElementById('progress-text');
+        const htmlElement = document.documentElement;
 
         let totalItems = 0;
-
-        function parseDuration(durationStr) {
-            const match = durationStr.match(/(\d+(\.\d+)?)h/);
-            return match ? parseFloat(match[1]) : 0;
-        }
 
         function updateProgress() {
             let checkedCount = 0;
@@ -207,32 +133,28 @@
             const moduleTotalItems = module.sessions.length + module.labs.length;
             totalItems += moduleTotalItems;
 
-            // Ajouter au menu
+            // Nav
             const navItem = document.createElement('li');
             navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600">${module.title.split('–')[0].trim()}</a>`;
             navList.appendChild(navItem);
 
-            // Générer sessions
+            // Sessions
             const sessionsHtml = module.sessions.map(session => `
                 <li class="flex items-start space-x-3 py-1">
                     <input type="checkbox" class="progress-item h-5 w-5 text-sky-600 rounded mt-1" data-item-id="${module.id}-${session.name}">
-                    <label class="text-slate-600 flex-1">
-                        ${session.name} <span class="ml-2 text-xs bg-slate-200 px-2 py-0.5 rounded">${session.duration}</span>
-                    </label>
+                    <label class="text-slate-600 flex-1">${session.name} <span class="ml-2 text-xs bg-slate-200 px-2 py-0.5 rounded">${session.duration}</span></label>
                 </li>
             `).join('');
 
-            // Générer labs
+            // Labs
             const labsHtml = module.labs.map(lab => `
                 <li class="flex items-start space-x-3 py-1">
                     <input type="checkbox" class="progress-item h-5 w-5 text-sky-600 rounded mt-1" data-item-id="${module.id}-${lab.name}">
-                    <label class="text-slate-600 font-medium flex-1">
-                        ${lab.name} <span class="ml-2 text-xs bg-sky-200 px-2 py-0.5 rounded">${lab.duration}</span>
-                    </label>
+                    <label class="text-slate-600 font-medium flex-1">${lab.name} <span class="ml-2 text-xs bg-sky-200 px-2 py-0.5 rounded">${lab.duration}</span></label>
                 </li>
             `).join('');
 
-            // Créer la carte module
+            // Module card
             const moduleElement = document.createElement('section');
             moduleElement.id = module.id;
             moduleElement.className = 'module-card bg-white rounded-lg shadow-md overflow-hidden';
@@ -241,24 +163,29 @@
                     <div>
                         <h2 class="text-xl font-bold text-slate-800">${module.title}</h2>
                         <div class="text-sm text-slate-500 mt-1">
-                            <span>${module.duration}</span> &bull;
-                            <span>${module.sessions.length} Sessions</span> &bull;
-                            <span>${module.labs.length} Labs</span>
+                            <span>${module.duration}</span> • <span>${module.sessions.length} Sessions</span> • <span>${module.labs.length} Labs</span>
                         </div>
                     </div>
-                    <div class="transform transition-transform duration-300">
-                        <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
+                    <svg class="w-6 h-6 text-slate-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </div>
                 <div class="module-content p-6">
                     ${sessionsHtml ? `<h3 class="font-semibold text-slate-700 mb-3">Sessions</h3><ul class="space-y-2 mb-4">${sessionsHtml}</ul>` : ''}
                     ${labsHtml ? `<h3 class="font-semibold text-slate-700 mb-3">Labs / Projects</h3><ul class="space-y-2">${labsHtml}</ul>` : ''}
+                    <button class="mark-complete mt-4 bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 transition">Mark Module Complete</button>
                 </div>
             `;
             learningPathContainer.appendChild(moduleElement);
         });
 
-        // Restaurer les checkboxes depuis localStorage
+        // Accordion toggle
+        document.querySelectorAll('.module-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.closest('.module-card');
+                card.classList.toggle('open');
+            });
+        });
+
+        // Restore progress
         document.querySelectorAll('.progress-item').forEach(item => {
             if (localStorage.getItem(item.dataset.itemId) === "true") {
                 item.checked = true;
@@ -266,9 +193,34 @@
             item.addEventListener('change', updateProgress);
         });
 
+        // Mark complete buttons
+        document.querySelectorAll('.mark-complete').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const moduleSection = btn.closest('.module-card');
+                moduleSection.querySelectorAll('.progress-item').forEach(item => {
+                    item.checked = true;
+                    localStorage.setItem(item.dataset.itemId, "true");
+                });
+                updateProgress();
+            });
+        });
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('light')) {
+                htmlElement.classList.remove('light');
+                htmlElement.classList.add('dark');
+                document.getElementById('theme-icon').textContent = "☀️";
+            } else {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+                document.getElementById('theme-icon').textContent = "🌙";
+            }
+        });
+
         updateProgress();
     });
-</script>
-
+    </script>
 </body>
 </html>
