@@ -1,0 +1,12 @@
+{
+  "id": "module-1",
+  "title": "Module 1 – Introduction to Cloud Computing",
+  "duration": "2h",
+  "sessions": [
+    { "name": "Session 1.1: On-Prem vs Cloud", "duration": "1h" },
+    { "name": "Session 1.2: Shared Responsibility", "duration": "0.5h" }
+  ],
+  "labs": [
+    { "name": "Lab 1.1: Comparison chart", "duration": "0.5h" }
+  ]
+}

@@ -161,357 +161,114 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const learningPathData = [
-                {
-                    id: 'module-0',
-                    title: 'Module 0 – Orientation & Prerequisites',
-                    duration: '0.5h',
-                    sessions: [{ name: 'Session 0.1: Audience, prerequisites, course goals, setup', duration: '0.5h' }],
-                    labs: []
-                },
-                {
-                    id: 'module-1',
-                    title: 'Module 1 – Introduction to Cloud Computing',
-                    duration: '2h',
-                    sessions: [
-                        { name: 'Session 1.1: On-Prem vs Cloud', duration: '1h' },
-                        { name: 'Session 1.2: Characteristics & Shared Responsibility', duration: '0.5h' }
-                    ],
-                    labs: [{ name: 'Lab 1.1: Comparison chart', duration: '0.5h' }]
-                },
-                {
-                    id: 'module-2',
-                    title: 'Module 2 – Cloud Service Models',
-                    duration: '3h',
-                    sessions: [
-                        { name: 'Session 2.1: IaaS, PaaS, SaaS', duration: '1h' },
-                        { name: 'Session 2.2: Deployment models', duration: '1h' }
-                    ],
-                    labs: [{ name: 'Lab 2.1: Service model identification', duration: '1h' }]
-                },
-                {
-                    id: 'module-3',
-                    title: 'Module 3 – Core Cloud Services',
-                    duration: '9h',
-                    sessions: [
-                        { name: 'Session 3.1: Compute', duration: '1h' },
-                        { name: 'Session 3.2: Storage', duration: '1h' },
-                        { name: 'Session 3.3: Networking', duration: '1.5h' },
-                        { name: 'Session 3.4: Containers', duration: '1h' }
-                    ],
-                    labs: [
-                        { name: 'Lab 3.1: VM + serverless', duration: '1.5h' },
-                        { name: 'Lab 3.2: Static website', duration: '1h' },
-                        { name: 'Lab 3.3: VPC connectivity', duration: '1.5h' },
-                        { name: 'Lab 3.4: Docker push', duration: '1h' }
-                    ]
-                },
-                {
-                    id: 'module-4',
-                    title: 'Module 4 – Cloud Management, Security & Cost Control',
-                    duration: '4.5h',
-                    sessions: [
-                        { name: 'Session 4.1: IAM', duration: '1h' },
-                        { name: 'Session 4.2: Cost Mgmt', duration: '1h' },
-                        { name: 'Session 4.3: Monitoring & Logging', duration: '0.5h' }
-                    ],
-                    labs: [
-                        { name: 'Lab 4.1: IAM roles & policies', duration: '1.5h' },
-                        { name: 'Lab 4.2: Budget alert & bill analysis', duration: '0.5h' }
-                    ]
-                },
-                {
-                    id: 'module-5',
-                    title: 'Module 5 – Infrastructure as Code (IaC)',
-                    duration: '2.5h',
-                    sessions: [
-                        { name: 'Session 5.1: Intro to IaC', duration: '0.5h' },
-                        { name: 'Session 5.2: Terraform basics', duration: '1h' }
-                    ],
-                    labs: [{ name: 'Lab 5.1: Terraform infra', duration: '1h' }]
-                },
-                {
-                    id: 'module-6',
-                    title: 'Module 6 – Capstone Project: Mini Cloud Application',
-                    duration: '7h',
-                    sessions: [
-                        { name: 'Session 6.1: Project planning', duration: '1h' },
-                        { name: 'Session 6.2: Infra with Terraform', duration: '2h' },
-                        { name: 'Session 6.3: App deployment + CI/CD', duration: '2h' }
-                    ],
-                    labs: [{ name: 'Lab 6.1: Capstone project', duration: '2h' }]
-                },
-                {
-                    id: 'module-7',
-                    title: 'Module 7 – Wrap-Up & Next Steps',
-                    duration: '0.5h',
-                    sessions: [{ name: 'Session 7.1: Review & learning pathways', duration: '0.5h' }],
-                    labs: []
-                }
-            ];
+    async function loadModules() {
+        // Charger la liste des modules
+        const response = await fetch("modules.json");
+        const list = await response.json();
+        const modules = [];
+        for (const file of list.files) {
+            const res = await fetch(file);
+            modules.push(await res.json());
+        }
+        return modules;
+    }
 
-            const learningPathContainer = document.getElementById('learning-path');
-            const navList = document.querySelector('#sticky-nav ul');
-            const progressBar = document.getElementById('progress-bar');
-            const progressText = document.getElementById('progress-text');
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIcon = document.getElementById('theme-icon');
+    document.addEventListener('DOMContentLoaded', async function () {
+        const learningPathData = await loadModules();
 
-            let totalItems = 0;
+        const learningPathContainer = document.getElementById('learning-path');
+        const navList = document.querySelector('#sticky-nav ul');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
 
-            function parseDuration(durationStr) {
-                const match = durationStr.match(/(\d+(\.\d+)?)h/);
-                return match ? parseFloat(match[1]) : 0;
-            }
+        let totalItems = 0;
 
-            let totalCourseHours = learningPathData.reduce((acc, module) => {
-                return acc + parseDuration(module.duration);
-            }, 0);
+        function parseDuration(durationStr) {
+            const match = durationStr.match(/(\d+(\.\d+)?)h/);
+            return match ? parseFloat(match[1]) : 0;
+        }
 
-            function updateProgress() {
-                let checkedCount = 0;
-                let completedHours = 0;
-                document.querySelectorAll('.progress-item').forEach(item => {
-                    const itemId = item.dataset.itemId;
-                    const isChecked = localStorage.getItem(itemId) === 'true';
-                    item.checked = isChecked;
-                    if (isChecked) {
-                        checkedCount++;
-                        const moduleMatch = itemId.match(/module-(\d+)/);
-                        const moduleIndex = parseInt(moduleMatch[1]);
-                        const itemType = itemId.includes('Session') ? 'sessions' : 'labs';
-                        const itemName = itemId.substring(itemId.indexOf(':') + 2); // Extract name part after 'Session X.X: ' or 'Lab X.X: '
-                        const moduleData = learningPathData[moduleIndex];
-                        if (moduleData) {
-                            const foundItem = moduleData[itemType].find(i => i.name.startsWith(itemName.split(' (')[0]));
-                             if (foundItem) {
-                                completedHours += parseDuration(foundItem.duration);
-                            }
-                        }
-                    }
-                });
-
-                const progressPercentage = (checkedCount / totalItems) * 100;
-                progressBar.style.width = `${progressPercentage}%`;
-                progressText.textContent = `${Math.round(progressPercentage)}%`;
-                
-                // You could also show completed hours vs total hours here if desired
-                // document.getElementById('total-duration').textContent = `${completedHours.toFixed(1)} / ${totalCourseHours.toFixed(1)}`;
-            }
-
-
-            learningPathData.forEach(module => {
-                const moduleTotalItems = module.sessions.length + module.labs.length;
-                totalItems += moduleTotalItems;
-
-                const navItem = document.createElement('li');
-                navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600 hover:bg-sky-100 transition-colors dark:hover:bg-sky-400 dark:hover:text-slate-900">${module.title.split('–')[0].trim()}</a>`;
-                navList.appendChild(navItem);
-
-                const sessionsHtml = module.sessions.map(session => `
-                    <li class="flex items-start space-x-3 py-1">
-                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${session.name} (${session.duration})">
-                        <label class="text-slate-600 flex-1">
-                            ${session.name}
-                            <span class="inline-block px-2 py-0.5 ml-2 text-xs font-semibold text-slate-700 bg-slate-200 rounded-full dark:bg-slate-500 dark:text-slate-100">${session.duration}</span>
-                        </label>
-                    </li>
-                `).join('');
-
-                const labsHtml = module.labs.map(lab => `
-                    <li class="flex items-start space-x-3 py-1">
-                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${lab.name} (${lab.duration})">
-                        <label class="text-slate-600 font-medium flex-1">
-                            ${lab.name}
-                            <span class="inline-block px-2 py-0.5 ml-2 text-xs font-semibold text-sky-700 bg-sky-200 rounded-full dark:bg-sky-400 dark:text-sky-900">${lab.duration}</span>
-                        </label>
-                    </li>
-                `).join('');
-
-                const moduleElement = document.createElement('section');
-                moduleElement.id = module.id;
-                moduleElement.className = 'module-card bg-white rounded-lg shadow-md overflow-hidden';
-                moduleElement.innerHTML = `
-                    <div class="module-header p-4 cursor-pointer flex justify-between items-center bg-slate-50 border-b border-slate-200 dark:border-slate-600">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800">${module.title}</h2>
-                            <div class="text-sm text-slate-500 mt-1">
-                                <span>${module.duration}</span> &bull;
-                                <span>${module.sessions.length} ${module.sessions.length === 1 ? 'Session' : 'Sessions'}</span> &bull;
-                                <span>${module.labs.length} ${module.labs.length === 1 ? 'Lab' : 'Labs'}</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <button class="mark-module-complete px-3 py-1 text-sm bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500" data-module-id="${module.id}">
-                                Mark Module Complete
-                            </button>
-                            <div class="transform transition-transform duration-300">
-                                <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="module-content p-6">
-                        ${sessionsHtml.length > 0 ? `<h3 class="font-semibold text-slate-700 mb-3">Sessions</h3><ul class="space-y-2 mb-4">${sessionsHtml}</ul>` : ''}
-                        ${labsHtml.length > 0 ? `<h3 class="font-semibold text-slate-700 mb-3">Labs / Projects</h3><ul class="space-y-2">${labsHtml}</ul>` : ''}
-                    </div>
-                `;
-                learningPathContainer.appendChild(moduleElement);
-            });
-
-            document.querySelectorAll('.module-header').forEach(header => {
-                header.addEventListener('click', (e) => {
-                    if (!e.target.closest('.mark-module-complete')) { // Prevent accordion toggle when clicking the button
-                        const card = header.parentElement;
-                        card.classList.toggle('open');
-                        const icon = header.querySelector('svg').parentElement;
-                        icon.classList.toggle('rotate-180');
-                    }
-                });
-            });
-
-            document.querySelectorAll('.mark-module-complete').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const moduleId = e.target.dataset.moduleId;
-                    const moduleElement = document.getElementById(moduleId);
-                    moduleElement.querySelectorAll('.progress-item').forEach(checkbox => {
-                        checkbox.checked = true;
-                        localStorage.setItem(checkbox.dataset.itemId, 'true');
-                    });
-                    updateProgress();
-                });
-            });
-
-            const timeSplitChartCtx = document.getElementById('timeSplitChart').getContext('2d');
-            let totalSessionHours = 0;
-            let totalLabHours = 0;
-
-            learningPathData.forEach(module => {
-                module.sessions.forEach(s => totalSessionHours += parseDuration(s.duration));
-                module.labs.forEach(l => totalLabHours += parseDuration(l.duration));
-            });
-
-            new Chart(timeSplitChartCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Sessions', 'Labs & Projects'],
-                    datasets: [{
-                        data: [totalSessionHours, totalLabHours],
-                        backgroundColor: ['#0ea5e9', '#0284c7'], /* sky-500, sky-600 */
-                        borderColor: 'transparent',
-                        borderWidth: 4,
-                        hoverOffset: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '70%',
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 20,
-                                font: {
-                                    size: 14,
-                                    family: 'Inter'
-                                },
-                                color: getComputedStyle(document.body).getPropertyValue('--text-slate-700') // Dynamic color
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed.toFixed(1) + 'h';
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Load progress from localStorage
+        function updateProgress() {
+            let checkedCount = 0;
             document.querySelectorAll('.progress-item').forEach(item => {
-                const itemId = item.dataset.itemId;
-                if (localStorage.getItem(itemId) === 'true') {
-                    item.checked = true;
-                }
-            });
-
-            updateProgress();
-
-            document.querySelectorAll('.progress-item').forEach(item => {
-                item.addEventListener('change', (e) => {
-                    if (e.target.checked) {
-                        localStorage.setItem(e.target.dataset.itemId, 'true');
-                    } else {
-                        localStorage.removeItem(e.target.dataset.itemId);
-                    }
-                    updateProgress();
-                });
-            });
-
-            const sections = document.querySelectorAll('main section');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                        });
-                        const correspondingLink = document.querySelector(`#sticky-nav a[href="#${entry.target.id}"]`);
-                        if (correspondingLink) {
-                            correspondingLink.classList.add('active');
-                        }
-                    }
-                });
-            }, { rootMargin: "-30% 0px -70% 0px" }); // Adjusted rootMargin for better active state switching
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
-            const navLinks = document.querySelectorAll('#sticky-nav a');
-            navLinks.forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
-            // Theme toggle functionality
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.classList.add(currentTheme);
-            themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
-
-            themeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.contains('dark');
-                if (isDark) {
-                    document.documentElement.classList.remove('dark');
-                    document.documentElement.classList.add('light');
-                    localStorage.setItem('theme', 'light');
-                    themeIcon.textContent = '🌙';
+                if (item.checked) {
+                    checkedCount++;
+                    localStorage.setItem(item.dataset.itemId, "true");
                 } else {
-                    document.documentElement.classList.remove('light');
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('theme', 'dark');
-                    themeIcon.textContent = '☀️';
+                    localStorage.removeItem(item.dataset.itemId);
                 }
-                // Re-render chart to pick up new label colors (if any)
-                // This would typically involve destroying and re-creating the chart instance.
-                // For simplicity here, we'll just note that in a more complex app, this would be needed.
             });
+            const progressPercentage = (checkedCount / totalItems) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${Math.round(progressPercentage)}%`;
+        }
+
+        learningPathData.forEach(module => {
+            const moduleTotalItems = module.sessions.length + module.labs.length;
+            totalItems += moduleTotalItems;
+
+            // Ajouter au menu
+            const navItem = document.createElement('li');
+            navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600">${module.title.split('–')[0].trim()}</a>`;
+            navList.appendChild(navItem);
+
+            // Générer sessions
+            const sessionsHtml = module.sessions.map(session => `
+                <li class="flex items-start space-x-3 py-1">
+                    <input type="checkbox" class="progress-item h-5 w-5 text-sky-600 rounded mt-1" data-item-id="${module.id}-${session.name}">
+                    <label class="text-slate-600 flex-1">
+                        ${session.name} <span class="ml-2 text-xs bg-slate-200 px-2 py-0.5 rounded">${session.duration}</span>
+                    </label>
+                </li>
+            `).join('');
+
+            // Générer labs
+            const labsHtml = module.labs.map(lab => `
+                <li class="flex items-start space-x-3 py-1">
+                    <input type="checkbox" class="progress-item h-5 w-5 text-sky-600 rounded mt-1" data-item-id="${module.id}-${lab.name}">
+                    <label class="text-slate-600 font-medium flex-1">
+                        ${lab.name} <span class="ml-2 text-xs bg-sky-200 px-2 py-0.5 rounded">${lab.duration}</span>
+                    </label>
+                </li>
+            `).join('');
+
+            // Créer la carte module
+            const moduleElement = document.createElement('section');
+            moduleElement.id = module.id;
+            moduleElement.className = 'module-card bg-white rounded-lg shadow-md overflow-hidden';
+            moduleElement.innerHTML = `
+                <div class="module-header p-4 cursor-pointer flex justify-between items-center bg-slate-50 border-b border-slate-200">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">${module.title}</h2>
+                        <div class="text-sm text-slate-500 mt-1">
+                            <span>${module.duration}</span> &bull;
+                            <span>${module.sessions.length} Sessions</span> &bull;
+                            <span>${module.labs.length} Labs</span>
+                        </div>
+                    </div>
+                    <div class="transform transition-transform duration-300">
+                        <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+                <div class="module-content p-6">
+                    ${sessionsHtml ? `<h3 class="font-semibold text-slate-700 mb-3">Sessions</h3><ul class="space-y-2 mb-4">${sessionsHtml}</ul>` : ''}
+                    ${labsHtml ? `<h3 class="font-semibold text-slate-700 mb-3">Labs / Projects</h3><ul class="space-y-2">${labsHtml}</ul>` : ''}
+                </div>
+            `;
+            learningPathContainer.appendChild(moduleElement);
         });
-    </script>
+
+        // Restaurer les checkboxes depuis localStorage
+        document.querySelectorAll('.progress-item').forEach(item => {
+            if (localStorage.getItem(item.dataset.itemId) === "true") {
+                item.checked = true;
+            }
+            item.addEventListener('change', updateProgress);
+        });
+
+        updateProgress();
+    });
+</script>
 
 </body>
 </html>
