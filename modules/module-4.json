@@ -1,0 +1,14 @@
+{
+  "id": "module-4",
+  "title": "Module 4 – Cloud Security Fundamentals",
+  "duration": "4h",
+  "sessions": [
+    { "name": "Session 4.1: Identity and Access Management (IAM)", "duration": "1h" },
+    { "name": "Session 4.2: Encryption & Data Protection", "duration": "1h" },
+    { "name": "Session 4.3: Security Best Practices", "duration": "1h" }
+  ],
+  "labs": [
+    { "name": "Lab 4.1: Configuring IAM Policies", "duration": "0.5h" },
+    { "name": "Lab 4.2: Securing a Storage Bucket", "duration": "0.5h" }
+  ]
+}

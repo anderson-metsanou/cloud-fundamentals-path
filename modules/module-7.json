@@ -1,0 +1,11 @@
+{
+  "id": "module-7",
+  "title": "Module 7 – Capstone Project",
+  "duration": "5h",
+  "sessions": [
+    { "name": "Session 7.1: Project Guidelines & Expectations", "duration": "1h" }
+  ],
+  "labs": [
+    { "name": "Lab 7.1: Deploying a Cloud Solution End-to-End", "duration": "4h" }
+  ]
+}

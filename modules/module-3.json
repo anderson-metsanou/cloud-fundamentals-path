@@ -1,0 +1,14 @@
+{
+  "id": "module-3",
+  "title": "Module 3 – Core Cloud Concepts",
+  "duration": "5h",
+  "sessions": [
+    { "name": "Session 3.1: Virtualization & Containers", "duration": "1.5h" },
+    { "name": "Session 3.2: Networking in the Cloud (VPCs, Subnets, Gateways)", "duration": "1.5h" },
+    { "name": "Session 3.3: Storage Models (Block, File, Object)", "duration": "1h" }
+  ],
+  "labs": [
+    { "name": "Lab 3.1: Deploying a VM", "duration": "0.5h" },
+    { "name": "Lab 3.2: Creating a Virtual Network", "duration": "0.5h" }
+  ]
+}

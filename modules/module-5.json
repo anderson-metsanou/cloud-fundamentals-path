@@ -1,0 +1,12 @@
+{
+  "id": "module-5",
+  "title": "Module 5 – Cloud Economics & Governance",
+  "duration": "3h",
+  "sessions": [
+    { "name": "Session 5.1: Cloud Pricing Models", "duration": "1h" },
+    { "name": "Session 5.2: Cost Optimization Strategies", "duration": "1h" }
+  ],
+  "labs": [
+    { "name": "Lab 5.1: TCO & Pricing Calculator", "duration": "1h" }
+  ]
+}

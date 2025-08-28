@@ -1,0 +1,12 @@
+{
+  "id": "module-0",
+  "title": "Module 0 – Orientation & Setup",
+  "duration": "1h",
+  "sessions": [
+    { "name": "Session 0.1: Welcome & Learning Path Overview", "duration": "0.5h" },
+    { "name": "Session 0.2: Environment Setup & Tools", "duration": "0.5h" }
+  ],
+  "labs": [
+    { "name": "Lab 0.1: Setting up your Cloud Environment", "duration": "0.5h" }
+  ]
+}
