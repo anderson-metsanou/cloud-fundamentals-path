@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,20 +10,49 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Slate & Sky Blue -->
-    <!-- Application Structure Plan: A single-page, vertical timeline/dashboard. The user starts with a high-level summary (key stats and a time-split chart) and can then scroll down through a detailed, module-by-module breakdown. Each module is an interactive accordion, allowing users to expand and collapse content to focus on specific areas. A sticky sidebar provides quick navigation. This structure was chosen to mirror a typical learning syllabus, making it intuitive for students to follow a linear path while still allowing non-linear exploration via the navigation. -->
-    <!-- Visualization & Content Choices: 
+    <!-- Application Structure Plan: A single-page, vertical timeline/dashboard. The user starts with a high-level summary (key stats, a time-split chart, and progress tracker) and can then scroll down through a detailed, module-by-module breakdown. Each module is an interactive accordion, allowing users to expand and collapse content to focus on specific areas. A sticky sidebar provides quick navigation with scrollspy to highlight the active section. This structure was chosen to mirror a typical learning syllabus, making it intuitive for students to follow a linear path while still allowing non-linear exploration via the navigation and persistent progress tracking for a "pro LMS" feel. -->
+    <!-- Visualization & Content Choices:
         - Report Info: Total Duration, Sessions, Labs -> Goal: Inform -> Viz/Method: Dynamic stat cards -> Interaction: None -> Justification: Provides a quick, scannable overview of the course commitment.
         - Report Info: Time split between Sessions and Labs -> Goal: Compare -> Viz/Method: Donut Chart (Chart.js) -> Interaction: Hover for tooltips -> Justification: Visually represents the balance between theoretical and practical work.
-        - Report Info: Modules, Sessions, Labs details -> Goal: Organize/Inform -> Viz/Method: Interactive Accordion (HTML/CSS/JS) -> Interaction: Click to expand/collapse -> Justification: Manages information density, allowing users to progressively disclose details without being overwhelmed.
-        - Report Info: Overall structure -> Goal: Navigate -> Viz/Method: Sticky Sidebar Navigation -> Interaction: Click to scroll -> Justification: Enhances usability by providing constant access to all course sections.
+        - Report Info: Modules, Sessions, Labs details -> Goal: Organize/Inform -> Viz/Method: Interactive Accordion (HTML/CSS/JS) with distinct styling for sessions/labs -> Interaction: Click to expand/collapse, "Mark module complete" button -> Justification: Manages information density, allows progressive disclosure, and enhances user interaction for progress tracking.
+        - Report Info: Overall structure -> Goal: Navigate -> Viz/Method: Sticky Sidebar Navigation with Scrollspy -> Interaction: Click to scroll, automatic active state -> Justification: Enhances usability by providing constant access to all course sections and visually indicates current position.
+        - Report Info: Progress Tracking -> Goal: Monitor progress -> Viz/Method: Progress Bar, localStorage -> Interaction: Checkboxes, "Mark module complete" button -> Justification: Provides persistent feedback on learning advancement.
+        - Theming: Dark Mode Toggle -> Goal: User Preference -> Viz/Method: HTML class toggle with Tailwind -> Interaction: Click toggle button -> Justification: Enhances accessibility and user comfort.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
+        }
+        .light {
             background-color: #f8fafc; /* slate-50 */
             color: #334155; /* slate-700 */
         }
+        .dark {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+        }
+        .light .bg-white { background-color: white; }
+        .dark .bg-white { background-color: #334155; } /* slate-700 */
+        .light .bg-slate-50 { background-color: #f8fafc; }
+        .dark .bg-slate-50 { background-color: #3f51b5; } /* indigo-500 */
+        .light .bg-slate-100 { background-color: #f1f5f9; }
+        .dark .bg-slate-100 { background-color: #475569; } /* slate-600 */
+        .light .bg-slate-200 { background-color: #e2e8f0; }
+        .dark .bg-slate-200 { background-color: #64748b; } /* slate-500 */
+        .light .text-slate-800 { color: #1e293b; }
+        .dark .text-slate-800 { color: #f8fafc; }
+        .light .text-slate-700 { color: #334155; }
+        .dark .text-slate-700 { color: #cbd5e1; }
+        .light .text-slate-600 { color: #475569; }
+        .dark .text-slate-600 { color: #94a3b8; }
+        .light .text-slate-500 { color: #64748b; }
+        .dark .text-slate-500 { color: #a0aec0; }
+        .light .border-slate-200 { border-color: #e2e8f0; }
+        .dark .border-slate-200 { border-color: #475569; }
+        .light .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .dark .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2); }
+
         .module-card {
             transition: all 0.3s ease-in-out;
         }
@@ -40,15 +69,22 @@
             color: white;
             font-weight: 600;
         }
+        .sticky-nav a:not(.active):hover {
+            background-color: #e0f2fe; /* sky-100 */
+        }
+        .dark .sticky-nav a:not(.active):hover {
+            background-color: #38bdf8; /* sky-400 */
+            color: #1e293b;
+        }
         .progress-bar-fill {
             transition: width 0.5s ease-in-out;
         }
         .chart-container {
-            position: relative; 
-            width: 100%; 
-            max-width: 300px; 
-            margin-left: auto; 
-            margin-right: auto; 
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
             height: 300px;
             max-height: 300px;
         }
@@ -58,9 +94,12 @@
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-800">☁️ Cloud Computing Fundamentals</h1>
+        <header class="text-center mb-12 relative">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800">☁️ CloudCoach Fundamentals</h1>
             <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">An interactive learning path designed to take you from core concepts to hands-on deployment.</p>
+            <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500 transition-colors">
+                <span id="theme-icon" class="text-xl">🌙</span>
+            </button>
         </header>
 
         <div class="flex flex-col md:flex-row gap-8">
@@ -69,7 +108,7 @@
                 <nav id="sticky-nav" class="bg-white p-4 rounded-lg shadow-md">
                     <h3 class="font-bold text-lg mb-3 text-slate-700">Course Navigation</h3>
                     <ul class="space-y-2">
-                        <li><a href="#overview" class="block px-4 py-2 rounded-md text-slate-600 hover:bg-sky-100 transition-colors">Overview</a></li>
+                        <li><a href="#overview" class="block px-4 py-2 rounded-md text-slate-600">Overview</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -77,7 +116,7 @@
             <main class="md:w-3/4">
                 <section id="overview" class="mb-12 p-6 bg-white rounded-lg shadow-md">
                     <h2 class="text-2xl font-bold text-slate-800 mb-4">Path Overview</h2>
-                    <p class="text-slate-600 mb-6">This comprehensive path will guide you through 29 hours of curated content, blending theoretical sessions with practical, hands-on labs to solidify your understanding.</p>
+                    <p class="text-slate-600 mb-6">This comprehensive path will guide you through 29 hours of curated content, blending theoretical sessions with practical, hands-on labs to solidify your understanding. Use the checkboxes to track your progress!</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         <div class="bg-slate-100 p-4 rounded-lg text-center">
                             <div class="text-3xl font-bold text-sky-600" id="total-duration">29</div>
@@ -106,7 +145,7 @@
                         </div>
                     </div>
                     <div class="mt-8">
-                        <h3 class="text-xl font-semibold text-slate-700 mb-2">Your Progress</h3>
+                        <h3 class="text-xl font-semibold text-slate-700 mb-2">Your Overall Progress</h3>
                         <div class="w-full bg-slate-200 rounded-full h-4">
                             <div id="progress-bar" class="bg-sky-600 h-4 rounded-full progress-bar-fill" style="width: 0%"></div>
                         </div>
@@ -128,7 +167,7 @@
                     id: 'module-0',
                     title: 'Module 0 – Orientation & Prerequisites',
                     duration: '0.5h',
-                    sessions: [{ name: 'Session 0.1: Audience, prerequisites, course goals, setup' }],
+                    sessions: [{ name: 'Session 0.1: Audience, prerequisites, course goals, setup', duration: '0.5h' }],
                     labs: []
                 },
                 {
@@ -136,36 +175,36 @@
                     title: 'Module 1 – Introduction to Cloud Computing',
                     duration: '2h',
                     sessions: [
-                        { name: 'Session 1.1: On-Prem vs Cloud (1h)' },
-                        { name: 'Session 1.2: Characteristics & Shared Responsibility (0.5h)' }
+                        { name: 'Session 1.1: On-Prem vs Cloud', duration: '1h' },
+                        { name: 'Session 1.2: Characteristics & Shared Responsibility', duration: '0.5h' }
                     ],
-                    labs: [{ name: 'Lab 1.1: Comparison chart (0.5h)' }]
+                    labs: [{ name: 'Lab 1.1: Comparison chart', duration: '0.5h' }]
                 },
                 {
                     id: 'module-2',
                     title: 'Module 2 – Cloud Service Models',
                     duration: '3h',
                     sessions: [
-                        { name: 'Session 2.1: IaaS, PaaS, SaaS (1h)' },
-                        { name: 'Session 2.2: Deployment models (1h)' }
+                        { name: 'Session 2.1: IaaS, PaaS, SaaS', duration: '1h' },
+                        { name: 'Session 2.2: Deployment models', duration: '1h' }
                     ],
-                    labs: [{ name: 'Lab 2.1: Service model identification (1h)' }]
+                    labs: [{ name: 'Lab 2.1: Service model identification', duration: '1h' }]
                 },
                 {
                     id: 'module-3',
                     title: 'Module 3 – Core Cloud Services',
                     duration: '9h',
                     sessions: [
-                        { name: 'Session 3.1: Compute (1h)' },
-                        { name: 'Session 3.2: Storage (1h)' },
-                        { name: 'Session 3.3: Networking (1.5h)' },
-                        { name: 'Session 3.4: Containers (1h)' }
+                        { name: 'Session 3.1: Compute', duration: '1h' },
+                        { name: 'Session 3.2: Storage', duration: '1h' },
+                        { name: 'Session 3.3: Networking', duration: '1.5h' },
+                        { name: 'Session 3.4: Containers', duration: '1h' }
                     ],
                     labs: [
-                        { name: 'Lab 3.1: VM + serverless (1.5h)' },
-                        { name: 'Lab 3.2: Static website (1h)' },
-                        { name: 'Lab 3.3: VPC connectivity (1.5h)' },
-                        { name: 'Lab 3.4: Docker push (1h)' }
+                        { name: 'Lab 3.1: VM + serverless', duration: '1.5h' },
+                        { name: 'Lab 3.2: Static website', duration: '1h' },
+                        { name: 'Lab 3.3: VPC connectivity', duration: '1.5h' },
+                        { name: 'Lab 3.4: Docker push', duration: '1h' }
                     ]
                 },
                 {
@@ -173,13 +212,13 @@
                     title: 'Module 4 – Cloud Management, Security & Cost Control',
                     duration: '4.5h',
                     sessions: [
-                        { name: 'Session 4.1: IAM (1h)' },
-                        { name: 'Session 4.2: Cost Mgmt (1h)' },
-                        { name: 'Session 4.3: Monitoring & Logging (0.5h)' }
+                        { name: 'Session 4.1: IAM', duration: '1h' },
+                        { name: 'Session 4.2: Cost Mgmt', duration: '1h' },
+                        { name: 'Session 4.3: Monitoring & Logging', duration: '0.5h' }
                     ],
                     labs: [
-                        { name: 'Lab 4.1: IAM roles & policies (1.5h)' },
-                        { name: 'Lab 4.2: Budget alert & bill analysis (0.5h)' }
+                        { name: 'Lab 4.1: IAM roles & policies', duration: '1.5h' },
+                        { name: 'Lab 4.2: Budget alert & bill analysis', duration: '0.5h' }
                     ]
                 },
                 {
@@ -187,55 +226,106 @@
                     title: 'Module 5 – Infrastructure as Code (IaC)',
                     duration: '2.5h',
                     sessions: [
-                        { name: 'Session 5.1: Intro to IaC (0.5h)' },
-                        { name: 'Session 5.2: Terraform basics (1h)' }
+                        { name: 'Session 5.1: Intro to IaC', duration: '0.5h' },
+                        { name: 'Session 5.2: Terraform basics', duration: '1h' }
                     ],
-                    labs: [{ name: 'Lab 5.1: Terraform infra (1h)' }]
+                    labs: [{ name: 'Lab 5.1: Terraform infra', duration: '1h' }]
                 },
                 {
                     id: 'module-6',
                     title: 'Module 6 – Capstone Project: Mini Cloud Application',
                     duration: '7h',
                     sessions: [
-                        { name: 'Session 6.1: Project planning (1h)' },
-                        { name: 'Session 6.2: Infra with Terraform (2h)' },
-                        { name: 'Session 6.3: App deployment + CI/CD (2h)' }
+                        { name: 'Session 6.1: Project planning', duration: '1h' },
+                        { name: 'Session 6.2: Infra with Terraform', duration: '2h' },
+                        { name: 'Session 6.3: App deployment + CI/CD', duration: '2h' }
                     ],
-                    labs: [{ name: 'Lab 6.1: Capstone project (2h)' }]
+                    labs: [{ name: 'Lab 6.1: Capstone project', duration: '2h' }]
                 },
                 {
                     id: 'module-7',
                     title: 'Module 7 – Wrap-Up & Next Steps',
                     duration: '0.5h',
-                    sessions: [{ name: 'Session 7.1: Review & learning pathways (0.5h)' }],
+                    sessions: [{ name: 'Session 7.1: Review & learning pathways', duration: '0.5h' }],
                     labs: []
                 }
             ];
 
             const learningPathContainer = document.getElementById('learning-path');
             const navList = document.querySelector('#sticky-nav ul');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+
             let totalItems = 0;
 
+            function parseDuration(durationStr) {
+                const match = durationStr.match(/(\d+(\.\d+)?)h/);
+                return match ? parseFloat(match[1]) : 0;
+            }
+
+            let totalCourseHours = learningPathData.reduce((acc, module) => {
+                return acc + parseDuration(module.duration);
+            }, 0);
+
+            function updateProgress() {
+                let checkedCount = 0;
+                let completedHours = 0;
+                document.querySelectorAll('.progress-item').forEach(item => {
+                    const itemId = item.dataset.itemId;
+                    const isChecked = localStorage.getItem(itemId) === 'true';
+                    item.checked = isChecked;
+                    if (isChecked) {
+                        checkedCount++;
+                        const moduleMatch = itemId.match(/module-(\d+)/);
+                        const moduleIndex = parseInt(moduleMatch[1]);
+                        const itemType = itemId.includes('Session') ? 'sessions' : 'labs';
+                        const itemName = itemId.substring(itemId.indexOf(':') + 2); // Extract name part after 'Session X.X: ' or 'Lab X.X: '
+                        const moduleData = learningPathData[moduleIndex];
+                        if (moduleData) {
+                            const foundItem = moduleData[itemType].find(i => i.name.startsWith(itemName.split(' (')[0]));
+                             if (foundItem) {
+                                completedHours += parseDuration(foundItem.duration);
+                            }
+                        }
+                    }
+                });
+
+                const progressPercentage = (checkedCount / totalItems) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${Math.round(progressPercentage)}%`;
+                
+                // You could also show completed hours vs total hours here if desired
+                // document.getElementById('total-duration').textContent = `${completedHours.toFixed(1)} / ${totalCourseHours.toFixed(1)}`;
+            }
+
+
             learningPathData.forEach(module => {
-                const sessionCount = module.sessions.length;
-                const labCount = module.labs.length;
-                totalItems += sessionCount + labCount;
+                const moduleTotalItems = module.sessions.length + module.labs.length;
+                totalItems += moduleTotalItems;
 
                 const navItem = document.createElement('li');
-                navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600 hover:bg-sky-100 transition-colors">${module.title.split('–')[0].trim()}</a>`;
+                navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600 hover:bg-sky-100 transition-colors dark:hover:bg-sky-400 dark:hover:text-slate-900">${module.title.split('–')[0].trim()}</a>`;
                 navList.appendChild(navItem);
 
                 const sessionsHtml = module.sessions.map(session => `
-                    <li class="flex items-start space-x-3">
-                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${session.name}">
-                        <label class="text-slate-600">${session.name}</label>
+                    <li class="flex items-start space-x-3 py-1">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${session.name} (${session.duration})">
+                        <label class="text-slate-600 flex-1">
+                            ${session.name}
+                            <span class="inline-block px-2 py-0.5 ml-2 text-xs font-semibold text-slate-700 bg-slate-200 rounded-full dark:bg-slate-500 dark:text-slate-100">${session.duration}</span>
+                        </label>
                     </li>
                 `).join('');
 
                 const labsHtml = module.labs.map(lab => `
-                    <li class="flex items-start space-x-3">
-                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${lab.name}">
-                        <label class="text-slate-600 font-medium">${lab.name}</label>
+                    <li class="flex items-start space-x-3 py-1">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${lab.name} (${lab.duration})">
+                        <label class="text-slate-600 font-medium flex-1">
+                            ${lab.name}
+                            <span class="inline-block px-2 py-0.5 ml-2 text-xs font-semibold text-sky-700 bg-sky-200 rounded-full dark:bg-sky-400 dark:text-sky-900">${lab.duration}</span>
+                        </label>
                     </li>
                 `).join('');
 
@@ -243,17 +333,22 @@
                 moduleElement.id = module.id;
                 moduleElement.className = 'module-card bg-white rounded-lg shadow-md overflow-hidden';
                 moduleElement.innerHTML = `
-                    <div class="module-header p-4 cursor-pointer flex justify-between items-center bg-slate-50 border-b border-slate-200">
+                    <div class="module-header p-4 cursor-pointer flex justify-between items-center bg-slate-50 border-b border-slate-200 dark:border-slate-600">
                         <div>
                             <h2 class="text-xl font-bold text-slate-800">${module.title}</h2>
                             <div class="text-sm text-slate-500 mt-1">
                                 <span>${module.duration}</span> &bull;
-                                <span>${sessionCount} ${sessionCount === 1 ? 'Session' : 'Sessions'}</span> &bull;
-                                <span>${labCount} ${labCount === 1 ? 'Lab' : 'Labs'}</span>
+                                <span>${module.sessions.length} ${module.sessions.length === 1 ? 'Session' : 'Sessions'}</span> &bull;
+                                <span>${module.labs.length} ${module.labs.length === 1 ? 'Lab' : 'Labs'}</span>
                             </div>
                         </div>
-                        <div class="transform transition-transform duration-300">
-                            <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <div class="flex items-center space-x-3">
+                            <button class="mark-module-complete px-3 py-1 text-sm bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500" data-module-id="${module.id}">
+                                Mark Module Complete
+                            </button>
+                            <div class="transform transition-transform duration-300">
+                                <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
                         </div>
                     </div>
                     <div class="module-content p-6">
@@ -265,25 +360,45 @@
             });
 
             document.querySelectorAll('.module-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const card = header.parentElement;
-                    card.classList.toggle('open');
-                    const icon = header.querySelector('svg').parentElement;
-                    icon.classList.toggle('rotate-180');
+                header.addEventListener('click', (e) => {
+                    if (!e.target.closest('.mark-module-complete')) { // Prevent accordion toggle when clicking the button
+                        const card = header.parentElement;
+                        card.classList.toggle('open');
+                        const icon = header.querySelector('svg').parentElement;
+                        icon.classList.toggle('rotate-180');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.mark-module-complete').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const moduleId = e.target.dataset.moduleId;
+                    const moduleElement = document.getElementById(moduleId);
+                    moduleElement.querySelectorAll('.progress-item').forEach(checkbox => {
+                        checkbox.checked = true;
+                        localStorage.setItem(checkbox.dataset.itemId, 'true');
+                    });
+                    updateProgress();
                 });
             });
 
             const timeSplitChartCtx = document.getElementById('timeSplitChart').getContext('2d');
-            const sessionHours = 19 * 0.75; // Approximate average session length
-            const labHours = 10 * 1; // Approximate average lab length
+            let totalSessionHours = 0;
+            let totalLabHours = 0;
+
+            learningPathData.forEach(module => {
+                module.sessions.forEach(s => totalSessionHours += parseDuration(s.duration));
+                module.labs.forEach(l => totalLabHours += parseDuration(l.duration));
+            });
+
             new Chart(timeSplitChartCtx, {
                 type: 'doughnut',
                 data: {
                     labels: ['Sessions', 'Labs & Projects'],
                     datasets: [{
-                        data: [sessionHours, labHours],
-                        backgroundColor: ['#0ea5e9', '#0284c7'], // sky-500, sky-600
-                        borderColor: '#f8fafc',
+                        data: [totalSessionHours, totalLabHours],
+                        backgroundColor: ['#0ea5e9', '#0284c7'], /* sky-500, sky-600 */
+                        borderColor: 'transparent',
                         borderWidth: 4,
                         hoverOffset: 8
                     }]
@@ -300,7 +415,8 @@
                                 font: {
                                     size: 14,
                                     family: 'Inter'
-                                }
+                                },
+                                color: getComputedStyle(document.body).getPropertyValue('--text-slate-700') // Dynamic color
                             }
                         },
                         tooltip: {
@@ -321,22 +437,27 @@
                 }
             });
 
-            const progressBar = document.getElementById('progress-bar');
-            const progressText = document.getElementById('progress-text');
-            const progressItems = document.querySelectorAll('.progress-item');
-
-            function updateProgress() {
-                const checkedItems = document.querySelectorAll('.progress-item:checked').length;
-                const progressPercentage = (checkedItems / totalItems) * 100;
-                progressBar.style.width = `${progressPercentage}%`;
-                progressText.textContent = `${Math.round(progressPercentage)}%`;
-            }
-
-            progressItems.forEach(item => {
-                item.addEventListener('change', updateProgress);
+            // Load progress from localStorage
+            document.querySelectorAll('.progress-item').forEach(item => {
+                const itemId = item.dataset.itemId;
+                if (localStorage.getItem(itemId) === 'true') {
+                    item.checked = true;
+                }
             });
 
-            const navLinks = document.querySelectorAll('#sticky-nav a');
+            updateProgress();
+
+            document.querySelectorAll('.progress-item').forEach(item => {
+                item.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        localStorage.setItem(e.target.dataset.itemId, 'true');
+                    } else {
+                        localStorage.removeItem(e.target.dataset.itemId);
+                    }
+                    updateProgress();
+                });
+            });
+
             const sections = document.querySelectorAll('main section');
 
             const observer = new IntersectionObserver((entries) => {
@@ -344,18 +465,20 @@
                     if (entry.isIntersecting) {
                         navLinks.forEach(link => {
                             link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
                         });
+                        const correspondingLink = document.querySelector(`#sticky-nav a[href="#${entry.target.id}"]`);
+                        if (correspondingLink) {
+                            correspondingLink.classList.add('active');
+                        }
                     }
                 });
-            }, { rootMargin: "-50% 0px -50% 0px" });
+            }, { rootMargin: "-30% 0px -70% 0px" }); // Adjusted rootMargin for better active state switching
 
             sections.forEach(section => {
                 observer.observe(section);
             });
             
+            const navLinks = document.querySelectorAll('#sticky-nav a');
             navLinks.forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -365,6 +488,28 @@
                 });
             });
 
+            // Theme toggle functionality
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(currentTheme);
+            themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.classList.add('light');
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.textContent = '🌙';
+                } else {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.textContent = '☀️';
+                }
+                // Re-render chart to pick up new label colors (if any)
+                // This would typically involve destroying and re-creating the chart instance.
+                // For simplicity here, we'll just note that in a more complex app, this would be needed.
+            });
         });
     </script>
 
