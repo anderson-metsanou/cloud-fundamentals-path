@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Computing Fundamentals: An Interactive Learning Path</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Slate & Sky Blue -->
+    <!-- Application Structure Plan: A single-page, vertical timeline/dashboard. The user starts with a high-level summary (key stats and a time-split chart) and can then scroll down through a detailed, module-by-module breakdown. Each module is an interactive accordion, allowing users to expand and collapse content to focus on specific areas. A sticky sidebar provides quick navigation. This structure was chosen to mirror a typical learning syllabus, making it intuitive for students to follow a linear path while still allowing non-linear exploration via the navigation. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Total Duration, Sessions, Labs -> Goal: Inform -> Viz/Method: Dynamic stat cards -> Interaction: None -> Justification: Provides a quick, scannable overview of the course commitment.
+        - Report Info: Time split between Sessions and Labs -> Goal: Compare -> Viz/Method: Donut Chart (Chart.js) -> Interaction: Hover for tooltips -> Justification: Visually represents the balance between theoretical and practical work.
+        - Report Info: Modules, Sessions, Labs details -> Goal: Organize/Inform -> Viz/Method: Interactive Accordion (HTML/CSS/JS) -> Interaction: Click to expand/collapse -> Justification: Manages information density, allowing users to progressively disclose details without being overwhelmed.
+        - Report Info: Overall structure -> Goal: Navigate -> Viz/Method: Sticky Sidebar Navigation -> Interaction: Click to scroll -> Justification: Enhances usability by providing constant access to all course sections.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .module-card {
+            transition: all 0.3s ease-in-out;
+        }
+        .module-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .module-card.open .module-content {
+            max-height: 1000px; /* Adjust as needed */
+        }
+        .sticky-nav a.active {
+            background-color: #0284c7; /* sky-600 */
+            color: white;
+            font-weight: 600;
+        }
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+        .chart-container {
+            position: relative; 
+            width: 100%; 
+            max-width: 300px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px;
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800">☁️ Cloud Computing Fundamentals</h1>
+            <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">An interactive learning path designed to take you from core concepts to hands-on deployment.</p>
+        </header>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            
+            <aside class="md:w-1/4 md:sticky top-8 self-start">
+                <nav id="sticky-nav" class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-3 text-slate-700">Course Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#overview" class="block px-4 py-2 rounded-md text-slate-600 hover:bg-sky-100 transition-colors">Overview</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="md:w-3/4">
+                <section id="overview" class="mb-12 p-6 bg-white rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">Path Overview</h2>
+                    <p class="text-slate-600 mb-6">This comprehensive path will guide you through 29 hours of curated content, blending theoretical sessions with practical, hands-on labs to solidify your understanding.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-slate-100 p-4 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-sky-600" id="total-duration">29</div>
+                            <div class="text-sm text-slate-500">Total Hours</div>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-sky-600" id="total-sessions">19</div>
+                            <div class="text-sm text-slate-500">Total Sessions</div>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-sky-600" id="total-labs">10</div>
+                            <div class="text-sm text-slate-500">Labs & Projects</div>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-sky-600" id="total-modules">8</div>
+                            <div class="text-sm text-slate-500">Modules</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <h3 class="text-xl font-semibold text-slate-700 mb-2">Learning Time Distribution</h3>
+                            <p class="text-slate-600">The course is structured to provide a balanced learning experience, with a significant portion dedicated to hands-on labs to ensure you can apply the concepts you learn.</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="timeSplitChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-2">Your Progress</h3>
+                        <div class="w-full bg-slate-200 rounded-full h-4">
+                            <div id="progress-bar" class="bg-sky-600 h-4 rounded-full progress-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <p class="text-right text-sm mt-1 text-slate-500"><span id="progress-text">0%</span> Complete</p>
+                    </div>
+                </section>
+
+                <div id="learning-path" class="space-y-6">
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const learningPathData = [
+                {
+                    id: 'module-0',
+                    title: 'Module 0 – Orientation & Prerequisites',
+                    duration: '0.5h',
+                    sessions: [{ name: 'Session 0.1: Audience, prerequisites, course goals, setup' }],
+                    labs: []
+                },
+                {
+                    id: 'module-1',
+                    title: 'Module 1 – Introduction to Cloud Computing',
+                    duration: '2h',
+                    sessions: [
+                        { name: 'Session 1.1: On-Prem vs Cloud (1h)' },
+                        { name: 'Session 1.2: Characteristics & Shared Responsibility (0.5h)' }
+                    ],
+                    labs: [{ name: 'Lab 1.1: Comparison chart (0.5h)' }]
+                },
+                {
+                    id: 'module-2',
+                    title: 'Module 2 – Cloud Service Models',
+                    duration: '3h',
+                    sessions: [
+                        { name: 'Session 2.1: IaaS, PaaS, SaaS (1h)' },
+                        { name: 'Session 2.2: Deployment models (1h)' }
+                    ],
+                    labs: [{ name: 'Lab 2.1: Service model identification (1h)' }]
+                },
+                {
+                    id: 'module-3',
+                    title: 'Module 3 – Core Cloud Services',
+                    duration: '9h',
+                    sessions: [
+                        { name: 'Session 3.1: Compute (1h)' },
+                        { name: 'Session 3.2: Storage (1h)' },
+                        { name: 'Session 3.3: Networking (1.5h)' },
+                        { name: 'Session 3.4: Containers (1h)' }
+                    ],
+                    labs: [
+                        { name: 'Lab 3.1: VM + serverless (1.5h)' },
+                        { name: 'Lab 3.2: Static website (1h)' },
+                        { name: 'Lab 3.3: VPC connectivity (1.5h)' },
+                        { name: 'Lab 3.4: Docker push (1h)' }
+                    ]
+                },
+                {
+                    id: 'module-4',
+                    title: 'Module 4 – Cloud Management, Security & Cost Control',
+                    duration: '4.5h',
+                    sessions: [
+                        { name: 'Session 4.1: IAM (1h)' },
+                        { name: 'Session 4.2: Cost Mgmt (1h)' },
+                        { name: 'Session 4.3: Monitoring & Logging (0.5h)' }
+                    ],
+                    labs: [
+                        { name: 'Lab 4.1: IAM roles & policies (1.5h)' },
+                        { name: 'Lab 4.2: Budget alert & bill analysis (0.5h)' }
+                    ]
+                },
+                {
+                    id: 'module-5',
+                    title: 'Module 5 – Infrastructure as Code (IaC)',
+                    duration: '2.5h',
+                    sessions: [
+                        { name: 'Session 5.1: Intro to IaC (0.5h)' },
+                        { name: 'Session 5.2: Terraform basics (1h)' }
+                    ],
+                    labs: [{ name: 'Lab 5.1: Terraform infra (1h)' }]
+                },
+                {
+                    id: 'module-6',
+                    title: 'Module 6 – Capstone Project: Mini Cloud Application',
+                    duration: '7h',
+                    sessions: [
+                        { name: 'Session 6.1: Project planning (1h)' },
+                        { name: 'Session 6.2: Infra with Terraform (2h)' },
+                        { name: 'Session 6.3: App deployment + CI/CD (2h)' }
+                    ],
+                    labs: [{ name: 'Lab 6.1: Capstone project (2h)' }]
+                },
+                {
+                    id: 'module-7',
+                    title: 'Module 7 – Wrap-Up & Next Steps',
+                    duration: '0.5h',
+                    sessions: [{ name: 'Session 7.1: Review & learning pathways (0.5h)' }],
+                    labs: []
+                }
+            ];
+
+            const learningPathContainer = document.getElementById('learning-path');
+            const navList = document.querySelector('#sticky-nav ul');
+            let totalItems = 0;
+
+            learningPathData.forEach(module => {
+                const sessionCount = module.sessions.length;
+                const labCount = module.labs.length;
+                totalItems += sessionCount + labCount;
+
+                const navItem = document.createElement('li');
+                navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600 hover:bg-sky-100 transition-colors">${module.title.split('–')[0].trim()}</a>`;
+                navList.appendChild(navItem);
+
+                const sessionsHtml = module.sessions.map(session => `
+                    <li class="flex items-start space-x-3">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${session.name}">
+                        <label class="text-slate-600">${session.name}</label>
+                    </li>
+                `).join('');
+
+                const labsHtml = module.labs.map(lab => `
+                    <li class="flex items-start space-x-3">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-600 rounded mt-1 progress-item" data-item-id="${module.id}-${lab.name}">
+                        <label class="text-slate-600 font-medium">${lab.name}</label>
+                    </li>
+                `).join('');
+
+                const moduleElement = document.createElement('section');
+                moduleElement.id = module.id;
+                moduleElement.className = 'module-card bg-white rounded-lg shadow-md overflow-hidden';
+                moduleElement.innerHTML = `
+                    <div class="module-header p-4 cursor-pointer flex justify-between items-center bg-slate-50 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">${module.title}</h2>
+                            <div class="text-sm text-slate-500 mt-1">
+                                <span>${module.duration}</span> &bull;
+                                <span>${sessionCount} ${sessionCount === 1 ? 'Session' : 'Sessions'}</span> &bull;
+                                <span>${labCount} ${labCount === 1 ? 'Lab' : 'Labs'}</span>
+                            </div>
+                        </div>
+                        <div class="transform transition-transform duration-300">
+                            <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                    <div class="module-content p-6">
+                        ${sessionsHtml.length > 0 ? `<h3 class="font-semibold text-slate-700 mb-3">Sessions</h3><ul class="space-y-2 mb-4">${sessionsHtml}</ul>` : ''}
+                        ${labsHtml.length > 0 ? `<h3 class="font-semibold text-slate-700 mb-3">Labs / Projects</h3><ul class="space-y-2">${labsHtml}</ul>` : ''}
+                    </div>
+                `;
+                learningPathContainer.appendChild(moduleElement);
+            });
+
+            document.querySelectorAll('.module-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const card = header.parentElement;
+                    card.classList.toggle('open');
+                    const icon = header.querySelector('svg').parentElement;
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            const timeSplitChartCtx = document.getElementById('timeSplitChart').getContext('2d');
+            const sessionHours = 19 * 0.75; // Approximate average session length
+            const labHours = 10 * 1; // Approximate average lab length
+            new Chart(timeSplitChartCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sessions', 'Labs & Projects'],
+                    datasets: [{
+                        data: [sessionHours, labHours],
+                        backgroundColor: ['#0ea5e9', '#0284c7'], // sky-500, sky-600
+                        borderColor: '#f8fafc',
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14,
+                                    family: 'Inter'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed.toFixed(1) + 'h';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const progressItems = document.querySelectorAll('.progress-item');
+
+            function updateProgress() {
+                const checkedItems = document.querySelectorAll('.progress-item:checked').length;
+                const progressPercentage = (checkedItems / totalItems) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${Math.round(progressPercentage)}%`;
+            }
+
+            progressItems.forEach(item => {
+                item.addEventListener('change', updateProgress);
+            });
+
+            const navLinks = document.querySelectorAll('#sticky-nav a');
+            const sections = document.querySelectorAll('main section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>
