@@ -1,12 +1,37 @@
 {
   "id": "module-0",
-  "title": "Module 0 – Orientation & Setup",
-  "duration": "1h",
+  "title": "Module 0 – Introduction to Cloud Computing",
+  "duration": "3h",
   "sessions": [
-    { "name": "Session 0.1: Welcome & Learning Path Overview", "duration": "0.5h" },
-    { "name": "Session 0.2: Environment Setup & Tools", "duration": "0.5h" }
+    {
+      "name": "What is Cloud Computing?",
+      "duration": "30m"
+    },
+    {
+      "name": "History & Evolution of Cloud",
+      "duration": "30m"
+    },
+    {
+      "name": "Cloud Service Models (IaaS, PaaS, SaaS)",
+      "duration": "45m"
+    },
+    {
+      "name": "Cloud Deployment Models (Public, Private, Hybrid, Multi-Cloud)",
+      "duration": "45m"
+    },
+    {
+      "name": "Benefits & Challenges of Cloud Adoption",
+      "duration": "30m"
+    }
   ],
   "labs": [
-    { "name": "Lab 0.1: Setting up your Cloud Environment", "duration": "0.5h" }
+    {
+      "name": "Lab: Create a Free Cloud Account (AWS / Azure / GCP)",
+      "duration": "30m"
+    },
+    {
+      "name": "Lab: Explore the Cloud Console UI",
+      "duration": "30m"
+    }
   ]
 }
