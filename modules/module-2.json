@@ -4,12 +4,180 @@
   "duration": "3h",
   "sessions": [
     {
-      "name": "Session 2.1: IaaS, PaaS, SaaS",
-      "duration": "1h"
+      "name": "Session 2.1: IaaS, PaaS, and SaaS",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome! In our last sessions, we learned what the cloud is and how it changed Amcloud's business. Now, let's explore the different ways a company can consume cloud services."
+        },
+        {
+          "type": "section",
+          "title": "☁️ The Three Main Cloud Service Models",
+          "data": "Cloud providers offer services in three main models: <strong>Infrastructure as a Service (IaaS)</strong>, <strong>Platform as a Service (PaaS)</strong>, and <strong>Software as a Service (SaaS)</strong>. The easiest way to understand these is through the famous <em>Pizza Analogy</em> 🍕."
+        },
+        {
+          "type": "section",
+          "title": "IaaS: Infrastructure as a Service 🛠️",
+          "data": "<b>Pizza Analogy:</b> Buying all the raw ingredients and cooking the pizza at home.\n\n<b>Amcloud Scenario:</b> Amcloud provisions a virtual server to host their website. They install the OS, web server, and application code themselves.\n\n<b>Responsibility:</b> Amcloud manages the OS, applications, and data. The provider manages the physical servers, networking, and storage."
+        },
+        {
+          "type": "section",
+          "title": "PaaS: Platform as a Service 🚀",
+          "data": "<b>Pizza Analogy:</b> Using a pizza kit with dough and sauce already prepared.\n\n<b>Amcloud Scenario:</b> Developers simply upload their code to a managed platform without worrying about servers or databases.\n\n<b>Responsibility:</b> Amcloud manages the app and data. The provider manages the OS, runtime, and infrastructure."
+        },
+        {
+          "type": "section",
+          "title": "SaaS: Software as a Service ✨",
+          "data": "<b>Pizza Analogy:</b> Ordering a fully cooked pizza for delivery.\n\n<b>Amcloud Scenario:</b> Amcloud uses SaaS tools like QuickBooks Online or Salesforce without installing anything.\n\n<b>Responsibility:</b> The provider manages everything; Amcloud only manages user access."
+        },
+        {
+          "type": "section",
+          "title": "🔄 Shared Responsibility Model",
+          "data": "As you move from IaaS ➝ SaaS, the provider takes on more of the management burden, reducing what you need to handle yourself."
+        },
+        {
+  "type": "section",
+  "title": "📊 Responsibility Table",
+  "data": "<table class='table-auto w-full border border-slate-300 text-sm text-left mt-3'><thead class='bg-slate-100'><tr><th class='border border-slate-300 px-3 py-2'></th><th class='border border-slate-300 px-3 py-2 font-semibold'>IaaS</th><th class='border border-slate-300 px-3 py-2 font-semibold'>PaaS</th><th class='border border-slate-300 px-3 py-2 font-semibold'>SaaS</th></tr></thead><tbody><tr><td class='border border-slate-300 px-3 py-2 font-medium'>Amcloud's Responsibility</td><td class='border border-slate-300 px-3 py-2'>OS, App, Data, Users</td><td class='border border-slate-300 px-3 py-2'>App, Data, Users</td><td class='border border-slate-300 px-3 py-2'>User Management</td></tr><tr><td class='border border-slate-300 px-3 py-2 font-medium'>Cloud Provider's Responsibility</td><td class='border border-slate-300 px-3 py-2'>Servers, Storage, Networking</td><td class='border border-slate-300 px-3 py-2'>OS, Servers, Storage, Networking</td><td class='border border-slate-300 px-3 py-2'>Everything</td></tr></tbody></table>"
+},
+
+        {
+          "type": "section",
+          "title": "📚 For further reading",
+          "data": "<ul><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-iaas/\" target=\"_blank\">What are IaaS, PaaS, and SaaS?</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Session 2.1 Knowledge Check 📝",
+          "questions": [
+            {
+              "q": "Amcloud's developers decide to upload their app code without worrying about servers. Which service model is this?",
+              "type": "single",
+              "options": ["IaaS", "PaaS", "SaaS", "On-Premises"],
+              "answer": "PaaS"
+            },
+            {
+              "q": "Which service model gives Amcloud the MOST control over OS and applications?",
+              "type": "single",
+              "options": ["IaaS", "PaaS", "SaaS"],
+              "answer": "IaaS"
+            },
+            {
+              "q": "True or False: In SaaS, Amcloud still patches the server OS.",
+              "type": "single",
+              "options": ["True", "False"],
+              "answer": "False"
+            },
+            {
+              "q": "Amcloud provisions VMs and installs the stack themselves. This is an example of?",
+              "type": "single",
+              "options": ["IaaS", "PaaS", "SaaS", "Hybrid"],
+              "answer": "IaaS"
+            },
+            {
+              "q": "Which is a key SaaS characteristic?",
+              "type": "single",
+              "options": ["You manage OS", "Ready-to-use app online", "You patch infra", "Access raw compute only"],
+              "answer": "Ready-to-use app online"
+            }
+          ]
+        }
+      ]
     },
     {
-      "name": "Session 2.2: Deployment models",
-      "duration": "1h"
+      "name": "Session 2.2: Cloud Deployment Models",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome back! In our last session, we talked about the different ways we can consume cloud services (IaaS, PaaS, and SaaS). Today, we'll shift our focus to where these services are deployed."
+        },
+        {
+          "type": "section",
+          "title": "🍽️ The Restaurant Analogy",
+          "data": "Think about a restaurant. You can eat at a public restaurant with everyone else, you can have a private party in a dedicated room, or you can have a hybrid approach—a party in a private room but with access to the public buffet. The cloud follows similar models."
+        },
+        {
+          "type": "section",
+          "title": "☁️ Public Cloud",
+          "data": "A public cloud is owned and operated by a third-party cloud service provider. All hardware, software, and other supporting infrastructure are owned and managed by the provider.\n\n• <b>Amcloud Scenario:</b> When Amcloud's IT team provisions a new virtual machine from their cloud provider, they're using a public cloud. The hardware is owned by the provider, and many other companies are using the same physical resources.\n\n<b>Key Characteristics:</b>\n• <strong>Cost-Effective</strong>: No upfront capital expenditure. You only pay for what you use.\n• <strong>Scalable</strong>: It offers nearly unlimited scalability and elasticity.\n• <strong>Low Maintenance</strong>: The provider is responsible for all maintenance and security of the underlying infrastructure."
+        },
+        {
+          "type": "section",
+          "title": "🔒 Private Cloud",
+          "data": "A private cloud is dedicated exclusively to a single organization. It can be physically located in the company's on-premises data center or be managed by a third-party provider. The key here is exclusivity.\n\n• <b>Amcloud Scenario:</b> Amcloud decides to keep its highly sensitive customer data on servers it owns and manages in its own data center. This part of their infrastructure is considered a private cloud. It's not a public service and is not shared with anyone else.\n\n<b>Key Characteristics:</b>\n• <strong>More Control</strong>: It gives you a higher level of control over security and compliance.\n• <strong>High Security</strong>: It is often used by organizations with strict data governance requirements.\n• <strong>Expensive</strong>: It requires a significant upfront investment and ongoing maintenance."
+        },
+        {
+          "type": "section",
+          "title": "🤝 Hybrid Cloud",
+          "data": "A hybrid cloud combines a public cloud and a private cloud. The two environments are linked together, allowing data and applications to be shared between them.\n\n• <b>Amcloud Scenario:</b> Amcloud uses its on-premises private cloud to store sensitive customer data, but it uses the public cloud for its e-commerce website, which handles high traffic volumes. This gives them the flexibility of the public cloud while maintaining control over their most critical data.\n\n<b>Key Characteristics:</b>\n• <strong>Flexibility</strong>: It offers the best of both worlds, providing the scalability of the public cloud with the security and control of the private cloud.\n• <strong>Cost-Efficient</strong>: It allows you to use public cloud resources for non-critical tasks, saving money.\n• <strong>Complex to Manage</strong>: Managing both environments can be complex and requires specialized skills."
+        },
+        {
+          "type": "section",
+          "title": "🔄 Putting It All Together",
+          "data": "The deployment model you choose is a strategic decision that depends on your needs. Just like choosing between a public bus, a private car, or a combination of both for your commute, each option has its own trade-offs.\n\n• <strong>Public Cloud</strong> is great for flexibility and cost-efficiency.\n• <strong>Private Cloud</strong> is ideal for security and control.\n• <strong>Hybrid Cloud</strong> gives you flexibility while keeping sensitive data secure."
+        },
+        {
+          "type": "section",
+          "title": "📚 For further reading",
+          "data": "<ul><li>🔗 <a href=\"https://cloud.google.com/learn/what-is-hybrid-cloud\" target=\"_blank\" rel=\"noopener\">What is hybrid cloud?</a></li><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-a-public-private-hybrid-cloud/\" target=\"_blank\" rel=\"noopener\">Public, private, and hybrid cloud</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Session 2.2 Knowledge Check 📝",
+          "questions": [
+            {
+              "q": "Amcloud's developers provision a new virtual server from a cloud provider. This server is shared among thousands of other customers. What type of deployment model is this?",
+              "options": [
+                "Public Cloud",
+                "Private Cloud",
+                "Hybrid Cloud",
+                "On-Premises"
+              ],
+              "answer": "Public Cloud"
+            },
+            {
+              "q": "Which of the following is a key characteristic of a private cloud?",
+              "options": [
+                "High level of scalability with no upfront investment",
+                "Exclusive use by a single organization",
+                "Pay-as-you-go pricing model",
+                "Shared with other companies"
+              ],
+              "answer": "Exclusive use by a single organization"
+            },
+            {
+              "q": "True or False: A hybrid cloud always consists of an on-premises data center and a public cloud.",
+              "options": [
+                "True",
+                "False"
+              ],
+              "answer": "False"
+            },
+            {
+              "q": "Which deployment model does Amcloud use if it stores sensitive customer data in its own data center while using a third-party provider for its public-facing e-commerce website?",
+              "options": [
+                "Public Cloud",
+                "Private Cloud",
+                "Hybrid Cloud",
+                "Community Cloud"
+              ],
+              "answer": "Hybrid Cloud"
+            },
+            {
+              "q": "What is a primary benefit of using a public cloud?",
+              "options": [
+                "Complete control over your infrastructure",
+                "High upfront investment",
+                "Reduced maintenance and operational costs",
+                "All of your infrastructure is physically in your building"
+              ],
+              "answer": "Reduced maintenance and operational costs"
+            }
+          ]
+        }
+      ]
     }
   ],
   "labs": [

@@ -3,9 +3,303 @@
   "title": "Module 3 – Core Cloud Services",
   "duration": "9h",
   "sessions": [
-    { "name": "Session 3.1: Compute", "duration": "1h" },
-    { "name": "Session 3.2: Storage", "duration": "1h" },
-    { "name": "Session 3.3: Networking", "duration": "1.5h" },
+    {
+      "name": "Session 3.1: Compute",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome to Module 3! We've covered the what, how, and where of cloud computing. Now, it's time to dive into the core services that power the cloud. Today's focus is on Compute—the raw processing power you use to run your applications."
+        },
+        {
+          "type": "section",
+          "title": "⚡ What is Compute?",
+          "data": "Think of compute services as the \"engine\" of the cloud. Just as a car needs an engine to run, your applications need compute resources to execute code, process data, and serve users. Amcloud's cloud provider offers different types of engines, each with its own purpose."
+        },
+        {
+          "type": "section",
+          "title": "1. Virtual Machines (VMs) 💻",
+          "data": "A VM is a virtualized computer running on a physical server in a data center. It's the most flexible compute service, giving you full control over the operating system. You can choose the size of the VM (CPU, RAM), the operating system (Windows, Linux), and configure its networking and storage.\n\n<b>Amcloud Scenario:</b> Amcloud's IT team needs to host their main e-commerce website on a reliable and configurable platform. They chose a VM because it gives them complete control. They can install a specific version of a web server (like Apache) and set up custom security patches that meet their compliance requirements. They can also manually scale up the VM's resources when they anticipate high traffic.\n\n<b>Analogy:</b> This is like renting a car from a rental agency. You get the whole car (the VM), and you are responsible for everything inside, from the music you play to how you manage the passenger's luggage."
+        },
+        {
+          "type": "section",
+          "title": "2. Containers 📦",
+          "data": "A container is a lightweight, portable package that includes an application and all its dependencies (libraries, frameworks, and configuration files). Containers are more efficient than VMs because they share the host operating system. This makes them ideal for modern, microservice-based applications.\n\n<b>Amcloud Scenario:</b> Amcloud's development team is building a new recommendation engine for their website. Instead of building it as part of the main application, they create it as a separate, small service. They package this service into a container. This ensures that the recommendation engine runs consistently, whether it's on a developer's laptop, in a testing environment, or on a production server in the cloud. They can update the recommendation engine without affecting the rest of the website.\n\n<b>Analogy:</b> This is like a pre-packed bento box. Everything you need for your meal is neatly organized and fits in a small, portable box. You don't need to rent an entire kitchen; you just need a surface to place your bento box on."
+        },
+        {
+          "type": "section",
+          "title": "3. Serverless Computing (Functions) 🚀",
+          "data": "Serverless computing allows you to run your code without provisioning or managing any servers. You simply upload your code, and the cloud provider handles all the server management, scaling, and maintenance. The key benefit is that you only pay when your code is running.\n\n<b>Amcloud Scenario:</b> Amcloud's marketing team wants to run a small piece of code that sends an email notification every time a new customer signs up. Instead of using a VM that runs 24/7, they use a serverless function. The function is triggered automatically by the sign-up event. The function only runs for a few seconds to send the email, and Amcloud is only billed for that brief moment of execution, making it extremely cost-effective.\n\n<b>Analogy:</b> This is like hiring a contractor to do a single, small task. You just tell them what to do (e.g., \"fix this leaky faucet\"), and they handle all the tools and logistics. You pay only for the work done, not for the time they spend waiting for another task."
+        },
+        {
+          "type": "section",
+          "title": "🔄 Putting It All Together",
+          "data": "The right compute service depends on your needs:\n\n• <strong>Use a VM</strong> for full control and flexibility, especially for traditional applications and legacy systems.\n• <strong>Use Containers</strong> for portability, efficiency, and microservice architectures.\n• <strong>Use Serverless</strong> for short-lived, event-driven tasks and to minimize costs by paying only for execution time."
+        },
+        {
+          "type": "section",
+          "title": "📊 Compute Services Comparison Table",
+          "data": "<table class='table-auto w-full border border-slate-300 text-sm text-left mt-3'><thead class='bg-slate-100'><tr><th class='border border-slate-300 px-3 py-2 font-semibold'>Service</th><th class='border border-slate-300 px-3 py-2 font-semibold'>Best For</th><th class='border border-slate-300 px-3 py-2 font-semibold'>Key Advantage</th></tr></thead><tbody><tr><td class='border border-slate-300 px-3 py-2'>Virtual Machines</td><td class='border border-slate-300 px-3 py-2'>Legacy applications, full control</td><td class='border border-slate-300 px-3 py-2'>Flexibility</td></tr><tr><td class='border border-slate-300 px-3 py-2'>Containers</td><td class='border border-slate-300 px-3 py-2'>Microservices, rapid deployment</td><td class='border border-slate-300 px-3 py-2'>Portability & Efficiency</td></tr><tr><td class='border border-slate-300 px-3 py-2'>Serverless Functions</td><td class='border border-slate-300 px-3 py-2'>Event-driven tasks, sporadic workloads</td><td class='border border-slate-300 px-3 py-2'>Cost-effectiveness (Pay-per-use)</td></tr></tbody></table>"
+        },
+        {
+          "type": "section",
+          "title": "📚 For further reading",
+          "data": "<ul><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-a-virtual-machine/\" target=\"_blank\" rel=\"noopener\">What is a virtual machine?</a></li><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-are-containers/\" target=\"_blank\" rel=\"noopener\">What are containers?</a></li><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-serverless-computing/\" target=\"_blank\" rel=\"noopener\">What is serverless computing?</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Session 3.1 Knowledge Check 📝",
+          "questions": [
+            {
+              "q": "Amcloud wants to run a batch job that processes customer data once a day for 5 minutes. Which compute service would be the most cost-effective choice for this task?",
+              "options": [
+                "Virtual Machine (VM)",
+                "Container",
+                "Serverless Function",
+                "Bare Metal Server"
+              ],
+              "answer": "Serverless Function"
+            },
+            {
+              "q": "Which compute service provides the most control over the underlying operating system and software?",
+              "options": [
+                "Virtual Machine (VM)",
+                "Container",
+                "Serverless Function",
+                "PaaS"
+              ],
+              "answer": "Virtual Machine (VM)"
+            },
+            {
+              "q": "True or False: Containers are a type of virtual machine.",
+              "options": [
+                "True",
+                "False"
+              ],
+              "answer": "False"
+            },
+            {
+              "q": "Amcloud's development team needs a way to package their application and all its dependencies to ensure it runs consistently across different environments. Which compute service is ideal for this?",
+              "options": [
+                "Serverless Function",
+                "Virtual Machine (VM)",
+                "Container",
+                "Infrastructure as a Service (IaaS)"
+              ],
+              "answer": "Container"
+            },
+            {
+              "q": "Which of the following is a key characteristic of a serverless function?",
+              "options": [
+                "You pay only for the time your code is running.",
+                "It requires you to manage the underlying operating system.",
+                "It is a full-fledged virtual computer.",
+                "It is primarily used for long-running, constant processes."
+              ],
+              "answer": "You pay only for the time your code is running."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Session 3.2: Storage",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome back! In our last session, we talked about the \"engines\" of the cloud. Today, we're going to talk about its \"memory\" and \"filing system\": Storage. 💾"
+        },
+        {
+          "type": "section",
+          "title": "🔹 1. Object Storage 🖼️",
+          "data": "Object storage is used to store unstructured data like images, videos, documents, and backups. Data is stored as \"objects\" in a flat structure, not in folders like a traditional file system. Each object has a unique identifier and metadata.\n\n<b>Amcloud Scenario:</b> Amcloud's e-commerce website has a massive catalog of product images and videos. The marketing team uploads new assets every day. Object storage is the perfect solution for this because it is highly scalable, durable, and cost-effective. Amcloud can store petabytes of data without worrying about server capacity.\n\n<b>Examples from Cloud Providers:</b>\n• AWS: Simple Storage Service (S3)\n• Azure: Blob Storage\n• GCP: Cloud Storage\n\n<b>Analogy:</b> Think of this as a digital locker room where you can store anything you want. You don't have to worry about where things go; you just put your stuff in a locker and get a key to access it later."
+        },
+        {
+          "type": "section",
+          "title": "🔹 2. Block Storage 🗄️",
+          "data": "Block storage is a type of storage that organizes data into blocks, and each block can be independently controlled and configured. It is the raw data storage that is attached to a virtual machine (VM). This is the traditional way to store data on a hard drive.\n\n<b>Amcloud Scenario:</b> Amcloud's main database, which powers its e-commerce website, requires very low latency and high performance. The IT team uses block storage for this database. It is directly connected to their VM, providing the fast I/O performance needed for a high-traffic database.\n\n<b>Examples from Cloud Providers:</b>\n• AWS: Elastic Block Store (EBS)\n• Azure: Disk Storage\n• GCP: Persistent Disk\n\n<b>Analogy:</b> This is like a single, empty hard drive you plug directly into your computer. You can format it and install an operating system on it, and it gives you direct control over the data."
+        },
+        {
+          "type": "section",
+          "title": "🔹 3. File Storage 📁",
+          "data": "File storage, also known as shared file systems, allows multiple VMs or users to access the same file storage simultaneously. It is based on a traditional hierarchy of files and folders.\n\n<b>Amcloud Scenario:</b> The creative design team at Amcloud needs to share large design files, mockups, and videos. Instead of each designer storing a copy on their local machine, they use file storage. Everyone can access the same shared folder, ensuring that they are all working on the most recent version of a file.\n\n<b>Examples from Cloud Providers:</b>\n• AWS: Elastic File System (EFS)\n• Azure: Azure Files\n• GCP: Filestore\n\n<b>Analogy:</b> This is just like a shared network drive in a traditional office. Everyone with permission can see the same folders and files."
+        },
+        {
+          "type": "section",
+          "title": "🔄 Putting It All Together",
+          "data": "The right storage service depends on what you're storing and how you need to access it.\n\n• <strong>Use Object Storage</strong> for large, unstructured datasets (images, backups).\n• <strong>Use Block Storage</strong> for high-performance databases and applications.\n• <strong>Use File Storage</strong> for shared access to files within a team or multiple servers."
+        },
+        {
+          "type": "section",
+          "title": "📊 Storage Services Comparison Table",
+          "data": "<table class='table-auto w-full border border-slate-300 text-sm text-left mt-3'><thead class='bg-slate-100'><tr><th class='border border-slate-300 px-3 py-2 font-semibold'>Service</th><th class='border border-slate-300 px-3 py-2 font-semibold'>Best For</th><th class='border border-slate-300 px-3 py-2 font-semibold'>Key Advantage</th></tr></thead><tbody><tr><td class='border border-slate-300 px-3 py-2'>Object Storage</td><td class='border border-slate-300 px-3 py-2'>Unstructured data, media</td><td class='border border-slate-300 px-3 py-2'>Scalability & Cost-effective</td></tr><tr><td class='border border-slate-300 px-3 py-2'>Block Storage</td><td class='border border-slate-300 px-3 py-2'>Databases, high-performance apps</td><td class='border border-slate-300 px-3 py-2'>High I/O performance</td></tr><tr><td class='border border-slate-300 px-3 py-2'>File Storage</td><td class='border border-slate-300 px-3 py-2'>Shared file systems</td><td class='border border-slate-300 px-3 py-2'>Easy to use (familiar)</td></tr></tbody></table>"
+        },
+        {
+          "type": "section",
+          "title": "📚 For further reading",
+          "data": "<ul><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-object-storage/\" target=\"_blank\" rel=\"noopener\">What is object storage?</a></li><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-block-storage/\" target=\"_blank\" rel=\"noopener\">What is block storage?</a></li><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-file-storage/\" target=\"_blank\" rel=\"noopener\">What is file storage?</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Session 3.2 Knowledge Check 📝",
+          "questions": [
+            {
+              "q": "Which of the following storage services is ideal for hosting millions of product images for Amcloud's e-commerce website?",
+              "options": [
+                "Block Storage",
+                "File Storage",
+                "Object Storage"
+              ],
+              "answer": "Object Storage"
+            },
+            {
+              "q": "Amcloud needs a high-performance storage solution directly connected to its virtual machine for a critical database. Which storage service should it choose?",
+              "options": [
+                "File Storage",
+                "Object Storage",
+                "Block Storage"
+              ],
+              "answer": "Block Storage"
+            },
+            {
+              "q": "True or False: File Storage is primarily designed for use by a single virtual machine.",
+              "options": [
+                "True",
+                "False"
+              ],
+              "answer": "False"
+            },
+            {
+              "q": "What are the key advantages of Object Storage? (Select two)",
+              "options": [
+                "High performance for databases",
+                "Unlimited scalability",
+                "Cost-effectiveness for unstructured data",
+                "Familiar hierarchical structure (folders)"
+              ],
+              "answer": [
+                "Unlimited scalability",
+                "Cost-effectiveness for unstructured data"
+              ]
+            },
+            {
+              "q": "Block Storage is often compared to what type of traditional storage device?",
+              "options": [
+                "A USB drive",
+                "A hard drive or an SSD",
+                "A shared network folder",
+                "A backup tape"
+              ],
+              "answer": "A hard drive or an SSD"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Session 3.3: Networking",
+      "duration": "1.5h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome back! In our last sessions, we covered the \"engines\" (Compute) and \"filing systems\" (Storage) of the cloud. Today, we're going to talk about its \"roads\" and \"highways\": <strong>Networking</strong>. 🌐"
+        },
+        {
+          "type": "text",
+          "data": "🛣️ <strong>Networking is the fundamental foundation of your cloud environment.</strong> It's what connects your servers, your databases, and your users to your applications. It’s the invisible yet crucial infrastructure that enables everything to work seamlessly."
+        },
+        {
+          "type": "section",
+          "title": "🔒 I. Virtual Private Cloud (VPC)",
+          "data": "<strong>What is a VPC?</strong> A VPC is your own private, isolated virtual data center within the public cloud. You have full control over its IP address range, subnets, route tables, and network gateways. This gives you a secure and isolated space to deploy all your resources.<br><br><b>Amcloud Scenario:</b> When Amcloud's team started their cloud migration, the first thing they did was create a VPC. This VPC became their private space to safely launch their website's web servers and their internal databases, completely isolated from other customers.<br><br><b>Key Concepts:</b><br>• <strong>Subnets:</strong> A VPC is divided into smaller segments called subnets. They help you organize your resources and control their access.<br>• <strong>Public Subnet:</strong> Resources in this subnet can be accessed from the internet. Amcloud's web servers are placed here so customers can reach the website.<br>• <strong>Private Subnet:</strong> Resources here are completely isolated from the internet and can only be accessed from within the VPC. Amcloud's databases are placed here for maximum security.<br>• <strong>IP Addressing:</strong> Just like in a traditional network, every resource has an IP address. In the cloud, you can have private IPs for internal communication and Elastic IPs or Public IPs for public access.<br>• <strong>Routing Tables:</strong> These tables act like a GPS for your network, telling traffic where to go. They determine if traffic stays within your VPC or goes out to the internet."
+        },
+        {
+          "type": "section",
+          "title": "🛡️ II. Core Networking Concepts & Security",
+          "data": "Controlling traffic is key to a secure network. The cloud provides powerful, built-in firewalls.<br><br>• <strong>Security Groups:</strong> 🧑‍✈️ These act as a firewall for your individual instances (like a VM). They control inbound and outbound traffic to and from that specific instance. Think of it as a bouncer at the door of a single club.<br>• <strong>Network Access Control Lists (Network ACLs):</strong> 🚧 These are stateless firewalls that control traffic for an entire subnet. They provide an additional layer of security. Think of them as a security gate for a whole neighborhood."
+        },
+        {
+          "type": "section",
+          "title": "⚖️ III. Load Balancing & Advanced Services",
+          "data": "<strong>Load Balancing:</strong> ⚖️ A Load Balancer automatically distributes incoming application traffic across multiple servers. This prevents any single server from getting overwhelmed and improves the website's reliability.<br><br><b>Amcloud Scenario:</b> During the Black Friday rush, the Load Balancer directed millions of visitors evenly to a group of web servers, ensuring the site remained fast and responsive. If one server failed, the Load Balancer would instantly stop sending traffic to it.<br><br><strong>Connectivity Services:</strong> 🔗 Amcloud uses a Site-to-Site VPN to securely connect its on-premises office to its cloud VPC. For higher bandwidth needs, they could use Direct Connect (AWS), ExpressRoute (Azure), or Cloud Interconnect (GCP).<br><br><strong>Content Delivery Network (CDN):</strong> 🌍 A CDN is a globally distributed network of servers that caches content (images, videos) closer to your users.<br><br><b>Amcloud Scenario:</b> When a customer in Paris accesses the Amcloud website, the product images are served from a server in Paris, not from Amcloud’s main servers in New York, which dramatically speeds up the website.<br><br><strong>DNS (Domain Name System):</strong> 🏷️ This service translates human-readable domain names (like amcloud.com) into computer-readable IP addresses. It’s the phonebook of the internet."
+        },
+        {
+          "type": "section",
+          "title": "🌐 IV. Putting It All Together: The Amcloud Networking Architecture",
+          "data": "Here's how Amcloud's network is set up in the cloud:<br><br>• <strong>Web Servers:</strong> Located in a public subnet and sit behind a Load Balancer to handle user traffic. They are protected by Security Groups.<br>• <strong>Databases:</strong> Placed in a private subnet with no public access. They are only accessible by the web servers, which is a critical security measure.<br>• <strong>Office Connection:</strong> Amcloud's on-premises office network connects to its VPC via a VPN for secure management.<br>• <strong>Global Performance:</strong> A CDN is used to cache static content globally, ensuring a fast user experience for customers everywhere."
+        },
+        {
+          "type": "image",
+          "src": "https://storage.googleapis.com/cloud-training-assets/networking/architecture-example.png",
+          "alt": "Example of Amcloud Networking Architecture"
+        },
+        {
+          "type": "section",
+          "title": "📚 For Further Reading",
+          "data": "<ul><li>🔗 <a href=\"https://aws.amazon.com/vpc/\" target=\"_blank\" rel=\"noopener\">What is a VPC?</a></li><li>🔗 <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Security.html\" target=\"_blank\" rel=\"noopener\">Network security with Security Groups vs. Network ACLs</a></li><li>🔗 <a href=\"https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways\" target=\"_blank\" rel=\"noopener\">How a VPN works in the cloud</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Session 3.3 Knowledge Check 📝",
+          "questions": [
+            {
+              "q": "Amcloud's database servers are deployed in a subnet that cannot be accessed directly from the public internet. What type of subnet is this?",
+              "options": [
+                "A public subnet",
+                "A private subnet",
+                "A security subnet",
+                "A VPN subnet"
+              ],
+              "answer": "A private subnet"
+            },
+            {
+              "q": "Which service is responsible for distributing incoming traffic evenly across multiple web servers to prevent any one server from being overwhelmed?",
+              "options": [
+                "A Content Delivery Network (CDN)",
+                "A Virtual Private Cloud (VPC)",
+                "A Load Balancer",
+                "A Network ACL"
+              ],
+              "answer": "A Load Balancer"
+            },
+            {
+              "q": "Amcloud's IT team needs a firewall to control traffic for an entire subnet. Which security feature should they use for this purpose?",
+              "options": [
+                "A Security Group",
+                "A Virtual Private Cloud (VPC)",
+                "A Network Access Control List (Network ACL)",
+                "A Load Balancer"
+              ],
+              "answer": "A Network Access Control List (Network ACL)"
+            },
+            {
+              "q": "What is the primary purpose of Amcloud's VPN connection between its on-premises office and its cloud VPC?",
+              "options": [
+                "To increase the speed of the website for customers.",
+                "To distribute traffic to the office computers.",
+                "To provide a secure and encrypted tunnel for internal network traffic.",
+                "To replace the need for an on-premises data center."
+              ],
+              "answer": "To provide a secure and encrypted tunnel for internal network traffic."
+            },
+            {
+              "q": "Which of the following statements are true about a Content Delivery Network (CDN) and a Domain Name System (DNS)? (Select two)",
+              "options": [
+                "A CDN is used to accelerate the delivery of web content.",
+                "DNS translates domain names into IP addresses.",
+                "A CDN is a type of firewall.",
+                "DNS is a networking service that distributes traffic."
+              ],
+              "answer": [
+                "A CDN is used to accelerate the delivery of web content.",
+                "DNS translates domain names into IP addresses."
+              ]
+            }
+          ]
+        }
+      ]
+    },
     { "name": "Session 3.4: Containers", "duration": "1h" }
   ],
   "labs": [
@@ -15,3 +309,4 @@
     { "name": "Lab 3.4: Docker push", "duration": "1h" }
   ]
 }
+    
