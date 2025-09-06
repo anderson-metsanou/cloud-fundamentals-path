@@ -12,48 +12,25 @@
 
   <style>
     body { font-family: 'Inter', sans-serif; }
-
-    /* 🌞 Light / 🌙 Dark mode palette */
     .light { background-color: #f8fafc; color: #334155; }
-    .dark body { background-color: #0f172a; color: #f1f5f9; }
+    .dark { background-color: #0f172a; color: #f1f5f9; }
 
-    .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
-    .dark .text-slate-800, .dark .text-slate-700, .dark .text-slate-600 {
-      color: #f1f5f9 !important;
-    }
-
-    .dark .bg-white, .dark .bg-slate-50, .dark .bg-slate-100, .dark .bg-slate-200 {
-      background-color: #1e293b !important;
-    }
-
+    .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 { color: #f1f5f9 !important; }
+    .dark .bg-white, .dark .bg-slate-50, .dark .bg-slate-100, .dark .bg-slate-200 { background-color: #1e293b !important; }
     .dark .border-slate-200 { border-color: #334155 !important; }
     .dark .text-slate-500 { color: #cbd5e1 !important; }
     .dark .progress-bar-fill { background-color: #38bdf8 !important; }
-    .dark .mark-complete { background-color: #0ea5e9 !important; }
 
-    /* Accordion */
     .module-card { transition: all 0.3s ease-in-out; }
     .module-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
-    .module-card.open .module-content { max-height: 1000px; }
+    .module-card.open .module-content { max-height: none; }
 
-    /* Sidebar nav */
-    .sticky-nav a.active {
-      background-color: #0284c7;
-      color: white;
-      font-weight: 600;
-    }
+    .sticky-nav a.active { background-color: #0284c7; color: white; font-weight: 600; }
     .sticky-nav a:not(.active):hover { background-color: #e0f2fe; }
     .dark .sticky-nav a:not(.active):hover { background-color: #38bdf8; color: #1e293b; }
 
     .progress-bar-fill { transition: width 0.5s ease-in-out; }
-
-    .chart-container {
-      position: relative;
-      width: 100%;
-      max-width: 300px;
-      margin: auto;
-      height: 300px;
-    }
+    .chart-container { position: relative; width: 100%; max-width: 300px; margin: auto; height: 300px; }
   </style>
 </head>
 <body class="antialiased">
@@ -62,9 +39,8 @@
 
     <header class="text-center mb-12 relative">
       <h1 class="text-4xl md:text-5xl font-bold text-slate-800">☁️ Cloud Fundamentals</h1>
-      <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Embark on a comprehensive learning adventure, designed to build a solid foundation in cloud computing through essential concepts and practical labs. Track your progress, explore key modules, and master the cloud!</p>
-      <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500 transition-colors">
-        <span id="theme-icon" class="text-xl">🌙</span>
+        <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Embark on a comprehensive learning adventure, designed to build a solid foundation in cloud computing through essential concepts and practical labs. Track your progress, explore key modules, and master the cloud!</p>      <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200">
+        <span id="theme-icon">🌙</span>
       </button>
     </header>
 
@@ -79,7 +55,7 @@
         </nav>
       </aside>
 
-      <!-- Main content -->
+      <!-- Main -->
       <main class="md:w-3/4">
         <!-- Overview -->
         <section id="overview" class="mb-12 p-6 bg-white rounded-lg shadow-md">
@@ -147,6 +123,55 @@
       return modules;
     }
 
+    function renderContent(content) {
+      return content.map((item, idx) => {
+        if (item.type === "text") {
+          return `<p class="mb-3 text-slate-600">${item.data}</p>`;
+        }
+        if (item.type === "section") {
+          return `<h4 class="font-semibold text-slate-700 mt-4">${item.title}</h4>
+                  <p class="mb-3 text-slate-600 whitespace-pre-line">${item.data}</p>`;
+        }
+        if (item.type === "image") {
+          return `<img src="${item.src}" alt="${item.alt}" class="my-4 rounded shadow-md">`;
+        }
+        if (item.type === "quiz") {
+          // Quiz as <details> block, radio for single, checkbox for multiple
+          return `
+            <details class="border border-slate-200 rounded-md p-3 mt-4">
+              <summary class="cursor-pointer font-semibold text-slate-700 flex items-center">
+                ${item.title}
+                <span class="quiz-result text-sm font-semibold ml-2"></span>
+              </summary>
+              <div class="mt-4 quiz-block" data-quiz-idx="${idx}">
+                ${item.questions.map((q, qIdx) => {
+                  const correctAnswers = Array.isArray(q.answer) ? q.answer : [q.answer];
+                  const isMulti = correctAnswers.length > 1;
+                  const inputType = isMulti ? "checkbox" : "radio";
+                  const nameAttr = `quiz-${idx}-q${qIdx}`;
+                  return `
+                    <div class="mb-4 quiz-question" data-qidx="${qIdx}" data-multi="${isMulti}">
+                      <p class="font-medium text-slate-600 mb-2">${q.q}</p>
+                      ${q.options.map((opt, optIdx) => `
+                        <label class="flex items-center mb-2 quiz-option-label">
+                          <input type="${inputType}" name="${nameAttr}" class="quiz-option mr-2"
+                            data-optidx="${optIdx}" data-correct="${correctAnswers.includes(opt)}">
+                          <span>${opt}</span>
+                        </label>
+                      `).join("")}
+                      <p class="quiz-feedback text-sm mt-1 text-slate-500 hidden"></p>
+                    </div>
+                  `;
+                }).join("")}
+                <button class="quiz-check bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 mt-2">Check Answers</button>
+              </div>
+            </details>
+          `;
+        }
+        return "";
+      }).join("");
+    }
+
     document.addEventListener('DOMContentLoaded', async function () {
       const learningPathData = await loadModules();
 
@@ -154,44 +179,44 @@
       const navList = document.querySelector('#sticky-nav ul');
       const progressBar = document.getElementById('progress-bar');
       const progressText = document.getElementById('progress-text');
-
       let totalItems = 0;
 
+      // Track completed modules in localStorage
+      let completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]');
+
       function updateProgress() {
-        let checkedCount = 0;
-        document.querySelectorAll('.progress-item').forEach(item => {
-          if (item.checked) {
-            checkedCount++;
-            localStorage.setItem(item.dataset.itemId, "true");
-          } else {
-            localStorage.removeItem(item.dataset.itemId);
-          }
-        });
-        const progressPercentage = (checkedCount / totalItems) * 100;
-        progressBar.style.width = `${progressPercentage}%`;
-        progressText.textContent = `${Math.round(progressPercentage)}%`;
+        const percent = Math.round((completedModules.length / learningPathData.length) * 100);
+        progressBar.style.width = percent + "%";
+        progressText.textContent = percent + "%";
       }
 
-      // Generate modules
-      learningPathData.forEach(module => {
+      learningPathData.forEach((module, moduleIdx) => {
         const moduleTotalItems = module.sessions.length + module.labs.length;
         totalItems += moduleTotalItems;
 
         const navItem = document.createElement('li');
-        navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600">${module.title.split('–')[0].trim()}</a>`;
+        navItem.innerHTML = `<a href="#${module.id}" class="block px-4 py-2 rounded-md text-slate-600">${module.title}</a>`;
         navList.appendChild(navItem);
 
         const sessionsHtml = module.sessions.map(session => `
-          <li class="flex items-start space-x-3 py-1">
-            <input type="checkbox" class="progress-item h-5 w-5 text-sky-600 rounded mt-1" data-item-id="${module.id}-${session.name}">
-            <label class="text-slate-600 flex-1">${session.name} <span class="ml-2 text-xs bg-slate-200 px-2 py-0.5 rounded">${session.duration}</span></label>
+          <li class="py-2">
+            <details class="border border-slate-200 rounded-md p-3">
+              <summary class="cursor-pointer font-medium text-slate-700">
+                ${session.name} <span class="ml-2 text-xs bg-slate-200 px-2 py-0.5 rounded">${session.duration}</span>
+              </summary>
+              <div class="mt-2">${renderContent(session.content || [])}</div>
+            </details>
           </li>
         `).join('');
 
         const labsHtml = module.labs.map(lab => `
-          <li class="flex items-start space-x-3 py-1">
-            <input type="checkbox" class="progress-item h-5 w-5 text-sky-600 rounded mt-1" data-item-id="${module.id}-${lab.name}">
-            <label class="text-slate-600 font-medium flex-1">${lab.name} <span class="ml-2 text-xs bg-sky-200 px-2 py-0.5 rounded">${lab.duration}</span></label>
+          <li class="py-2">
+            <details class="border border-slate-200 rounded-md p-3">
+              <summary class="cursor-pointer font-medium text-slate-700">
+                ${lab.name} <span class="ml-2 text-xs bg-slate-200 px-2 py-0.5 rounded">${lab.duration}</span>
+              </summary>
+              <div class="mt-2">${renderContent(lab.content || [])}</div>
+            </details>
           </li>
         `).join('');
 
@@ -208,67 +233,157 @@
                 <span>${module.labs.length} Labs</span>
               </div>
             </div>
-            <div class="transform transition-transform duration-300">
-              <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </div>
           </div>
           <div class="module-content p-6">
             ${sessionsHtml ? `<h3 class="font-semibold text-slate-700 mb-3">Sessions</h3><ul class="space-y-2 mb-4">${sessionsHtml}</ul>` : ''}
-            ${labsHtml ? `<h3 class="font-semibold text-slate-700 mb-3">Labs / Projects</h3><ul class="space-y-2">${labsHtml}</ul>` : ''}
-            <button class="mark-complete mt-4 bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 transition">Mark Module Complete</button>
+            ${labsHtml ? `<h3 class="font-semibold text-slate-700 mb-3">Labs</h3><ul class="space-y-2">${labsHtml}</ul>` : ''}
+            <button class="mark-complete mt-4 bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700" data-module-id="${module.id}" ${completedModules.includes(module.id) ? '' : 'disabled style="opacity:0.5;cursor:not-allowed;"'}>Mark Module Complete</button>
           </div>
         `;
         learningPathContainer.appendChild(moduleElement);
       });
 
-      // Accordion toggle
-      document.querySelectorAll('.module-header').forEach(header => {
-        header.addEventListener('click', () => {
-          const card = header.closest('.module-card');
-          card.classList.toggle('open');
-        });
-      });
-
-      // Restore checkboxes
-      document.querySelectorAll('.progress-item').forEach(item => {
-        if (localStorage.getItem(item.dataset.itemId) === "true") {
-          item.checked = true;
-        }
-        item.addEventListener('change', updateProgress);
-      });
-
-      // Handle "Mark as complete"
-      document.querySelectorAll('.mark-complete').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const moduleSection = btn.closest('.module-card');
-          moduleSection.querySelectorAll('.progress-item').forEach(item => {
-            item.checked = true;
-            localStorage.setItem(item.dataset.itemId, "true");
-          });
-          updateProgress();
-        });
-      });
-
       updateProgress();
 
-      // Chart.js donut chart
+      // Accordion (open/close module)
+      document.querySelectorAll('.module-header').forEach(header => {
+        header.addEventListener('click', () => header.closest('.module-card').classList.toggle('open'));
+      });
+
+      // Quiz interactions
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('quiz-check')) {
+          const quizBlock = e.target.closest('.quiz-block');
+          const questions = quizBlock.querySelectorAll('.quiz-question');
+          let correctCount = 0;
+          questions.forEach(qEl => {
+            const isMulti = qEl.dataset.multi === "true";
+            const options = qEl.querySelectorAll('.quiz-option');
+            let isCorrect = true;
+            let hasAnyChecked = false;
+            if (isMulti) {
+              options.forEach(opt => {
+                const checked = opt.checked;
+                const shouldBeChecked = opt.dataset.correct === "true";
+                hasAnyChecked = hasAnyChecked || checked;
+                const label = opt.closest('.quiz-option-label');
+                label.classList.remove('bg-green-100', 'bg-red-100', 'text-green-700', 'text-red-700');
+                if (checked && shouldBeChecked) {
+                  label.classList.add('bg-green-100', 'text-green-700');
+                } else if (checked && !shouldBeChecked) {
+                  label.classList.add('bg-red-100', 'text-red-700');
+                  isCorrect = false;
+                } else if (!checked && shouldBeChecked) {
+                  isCorrect = false;
+                }
+              });
+            } else {
+              options.forEach(opt => {
+                const checked = opt.checked;
+                const shouldBeChecked = opt.dataset.correct === "true";
+                const label = opt.closest('.quiz-option-label');
+                label.classList.remove('bg-green-100', 'bg-red-100', 'text-green-700', 'text-red-700');
+                if (checked) {
+                  hasAnyChecked = true;
+                  if (shouldBeChecked) {
+                    label.classList.add('bg-green-100', 'text-green-700');
+                  } else {
+                    label.classList.add('bg-red-100', 'text-red-700');
+                    isCorrect = false;
+                  }
+                }
+                if (!checked && shouldBeChecked) {
+                  isCorrect = false;
+                }
+              });
+            }
+            // Feedback
+            const feedback = qEl.querySelector('.quiz-feedback');
+            if (!hasAnyChecked) {
+              feedback.textContent = "Please select at least one answer.";
+              feedback.classList.remove("hidden", "text-green-600", "text-red-600");
+              feedback.classList.add("text-red-600");
+              isCorrect = false;
+            } else if (isCorrect) {
+              feedback.textContent = "✅ Correct!";
+              feedback.classList.remove("hidden", "text-red-600");
+              feedback.classList.add("text-green-600");
+              correctCount++;
+            } else {
+              feedback.textContent = "❌ Incorrect.";
+              feedback.classList.remove("hidden", "text-green-600");
+              feedback.classList.add("text-red-600");
+            }
+          });
+          // Show quiz result
+          const score = Math.round((correctCount / questions.length) * 100);
+          const resultSpan = quizBlock.parentElement.querySelector('.quiz-result');
+          if (score >= 70) {
+            resultSpan.textContent = `Passed (${score}%)`;
+            resultSpan.classList.remove('text-red-600');
+            resultSpan.classList.add('text-green-600');
+            // Enable "Mark Module Complete" button for this module
+            const moduleSection = quizBlock.closest('.module-card');
+            if (moduleSection) {
+              const btn = moduleSection.querySelector('.mark-complete');
+              if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '';
+                btn.style.cursor = '';
+              }
+            }
+          } else {
+            resultSpan.textContent = `Failed (${score}%)`;
+            resultSpan.classList.remove('text-green-600');
+            resultSpan.classList.add('text-red-600');
+            // Optionally, disable the button again if failed
+            const moduleSection = quizBlock.closest('.module-card');
+            if (moduleSection) {
+              const btn = moduleSection.querySelector('.mark-complete');
+              if (btn && !completedModules.includes(moduleSection.id)) {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+              }
+            }
+          }
+        }
+
+        // Mark module complete
+        if (e.target.classList.contains('mark-complete')) {
+          const btn = e.target;
+          const moduleSection = btn.closest('.module-card');
+          const moduleId = btn.getAttribute('data-module-id');
+          if (!completedModules.includes(moduleId)) {
+            completedModules.push(moduleId);
+            localStorage.setItem('completedModules', JSON.stringify(completedModules));
+            btn.disabled = true;
+            btn.textContent = "Module Completed ✔";
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+            updateProgress();
+          }
+        }
+      });
+
+      // On load, update completed module buttons
+      document.querySelectorAll('.mark-complete').forEach(btn => {
+        const moduleId = btn.getAttribute('data-module-id');
+        if (completedModules.includes(moduleId)) {
+          btn.disabled = true;
+          btn.textContent = "Module Completed ✔";
+          btn.style.opacity = '0.5';
+          btn.style.cursor = 'not-allowed';
+        }
+      });
+
+      // Chart.js donut
       const ctx = document.getElementById('timeSplitChart');
       if (ctx) {
         timeChart = new Chart(ctx, {
           type: 'doughnut',
-          data: {
-            labels: ['Sessions', 'Labs'],
-            datasets: [{ data: [70, 30], backgroundColor: ['#0ea5e9', '#38bdf8'], borderWidth: 0 }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'bottom',
-                labels: { color: '#334155' }
-              }
-            }
-          }
+          data: { labels: ['Sessions', 'Labs'], datasets: [{ data: [70, 30], backgroundColor: ['#0ea5e9', '#38bdf8'] }] },
+          options: { plugins: { legend: { position: 'bottom' } } }
         });
       }
 
@@ -276,15 +391,9 @@
       const themeToggle = document.getElementById('theme-toggle');
       const htmlElement = document.documentElement;
       themeToggle.addEventListener('click', () => {
-        if (htmlElement.classList.contains('light')) {
-          htmlElement.classList.remove('light'); htmlElement.classList.add('dark');
-          document.getElementById('theme-icon').textContent = "☀️";
-          if (timeChart) timeChart.options.plugins.legend.labels.color = '#f1f5f9';
-        } else {
-          htmlElement.classList.remove('dark'); htmlElement.classList.add('light');
-          document.getElementById('theme-icon').textContent = "🌙";
-          if (timeChart) timeChart.options.plugins.legend.labels.color = '#334155';
-        }
+        htmlElement.classList.toggle('dark');
+        htmlElement.classList.toggle('light');
+        document.getElementById('theme-icon').textContent = htmlElement.classList.contains('dark') ? "☀️" : "🌙";
         if (timeChart) timeChart.update();
       });
     });

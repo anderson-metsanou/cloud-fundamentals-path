@@ -3,10 +3,19 @@
   "title": "Module 2 – Cloud Service Models",
   "duration": "3h",
   "sessions": [
-    { "name": "Session 2.1: IaaS, PaaS, SaaS Explained", "duration": "1h" },
-    { "name": "Session 2.2: Deployment Models (Public, Private, Hybrid, Multi-Cloud)", "duration": "1h" }
+    {
+      "name": "Session 2.1: IaaS, PaaS, SaaS",
+      "duration": "1h"
+    },
+    {
+      "name": "Session 2.2: Deployment models",
+      "duration": "1h"
+    }
   ],
   "labs": [
-    { "name": "Lab 2.1: Service Model Identification", "duration": "1h" }
+    {
+      "name": "Lab 2.1: Service model identification",
+      "duration": "1h"
+    }
   ]
 }

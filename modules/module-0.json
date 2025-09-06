@@ -1,37 +1,74 @@
 {
   "id": "module-0",
-  "title": "Module 0 – Introduction to Cloud Computing",
-  "duration": "3h",
+  "title": "Module 0 – Orientation & Prerequisites",
+  "duration": "0.5h",
   "sessions": [
     {
-      "name": "What is Cloud Computing?",
-      "duration": "30m"
-    },
-    {
-      "name": "History & Evolution of Cloud",
-      "duration": "30m"
-    },
-    {
-      "name": "Cloud Service Models (IaaS, PaaS, SaaS)",
-      "duration": "45m"
-    },
-    {
-      "name": "Cloud Deployment Models (Public, Private, Hybrid, Multi-Cloud)",
-      "duration": "45m"
-    },
-    {
-      "name": "Benefits & Challenges of Cloud Adoption",
-      "duration": "30m"
+      "name": "Session 0.1: Audience, prerequisites, course goals, setup",
+      "duration": "0.5h",
+      "content": [
+        {
+          "type": "text",
+          "data": "This module introduces the course audience, prerequisites, learning goals, and setup instructions. It ensures all learners are ready before diving into Cloud fundamentals."
+        },
+        {
+          "type": "section",
+          "title": "Audience 👥",
+          "data": "This course is designed for:\n- Students in computer science or engineering\n- IT professionals exploring Cloud Computing\n- System administrators or DevOps beginners\n- Tech enthusiasts curious about the Cloud"
+        },
+        {
+          "type": "section",
+          "title": "Prerequisites 🛠️",
+          "data": "You need:\n- A computer (Windows, macOS, or Linux)\n- Stable internet connection 🌍\n- A modern browser (Chrome, Edge, Firefox)\n- Git + Visual Studio Code\n- A valid email (for Cloud account)"
+        },
+        {
+          "type": "section",
+          "title": "Course Goals 🎓",
+          "data": "By the end of this 29h course, you will be able to:\n- Explain Cloud fundamentals\n- Differentiate between IaaS, PaaS, SaaS\n- Use core Cloud services (Compute, Storage, Networking, Containers)\n- Manage IAM, security, cost control\n- Automate infra with Terraform\n- Build & deploy a mini Cloud application with CI/CD"
+        },
+        {
+          "type": "section",
+          "title": "Setup Instructions ⚙️",
+          "data": "1. Install Git (git-scm.com)\n   - Linux: sudo apt install git -y\n   - macOS: brew install git\n2. Install VS Code (code.visualstudio.com)\n   - Extensions: YAML, Terraform, Docker, GitLens\n3. Create a free Cloud account (AWS, Azure, or Google Cloud)\n4. Verify setup: run `git --version` and open VS Code."
+        },
+        {
+          "type": "section",
+          "title": "Quick Recap 📊",
+          "data": "- Audience: Students & IT professionals\n- Requirements: PC + Internet\n- Goals: Fundamentals → Practice → Project\n- Setup: Git + VS Code + Cloud account"
+        },
+        {
+          "type": "quiz",
+          "title": "Self-check Quiz 📝",
+          "questions": [
+            {
+              "q": "Who is the primary audience of this course?",
+              "options": ["Advanced Cloud Architects", "Non-technical managers", "Students, IT beginners, professionals", "High school students with no IT background"],
+              "answer": "Students, IT beginners, professionals"
+            },
+            {
+              "q": "Which tools should you install before starting?",
+              "options": ["Git and Visual Studio Code", "Photoshop and Illustrator", "Word and Excel", "VMware Workstation"],
+              "answer": "Git and Visual Studio Code"
+            },
+            {
+              "q": "Which statement is TRUE?",
+              "options": ["You must already be a Cloud expert", "Stable internet connection is necessary", "You don’t need a computer", "Works only on macOS"],
+              "answer": "Stable internet connection is necessary"
+            },
+            {
+              "q": "Which is NOT a Cloud free tier provider?",
+              "options": ["AWS", "Azure", "Google Cloud", "Facebook Cloud"],
+              "answer": "Facebook Cloud"
+            },
+            {
+              "q": "What is the approximate course duration?",
+              "options": ["5 hours", "15 hours", "29 hours", "50 hours"],
+              "answer": "29 hours"
+            }
+          ]
+        }
+      ]
     }
   ],
-  "labs": [
-    {
-      "name": "Lab: Create a Free Cloud Account (AWS / Azure / GCP)",
-      "duration": "30m"
-    },
-    {
-      "name": "Lab: Explore the Cloud Console UI",
-      "duration": "30m"
-    }
-  ]
+  "labs": []
 }

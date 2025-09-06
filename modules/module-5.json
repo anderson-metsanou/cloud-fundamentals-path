@@ -1,12 +1,12 @@
 {
   "id": "module-5",
-  "title": "Module 5 – Cloud Economics & Governance",
-  "duration": "3h",
+  "title": "Module 5 – Infrastructure as Code (IaC)",
+  "duration": "2.5h",
   "sessions": [
-    { "name": "Session 5.1: Cloud Pricing Models", "duration": "1h" },
-    { "name": "Session 5.2: Cost Optimization Strategies", "duration": "1h" }
+    { "name": "Session 5.1: Intro to IaC", "duration": "0.5h" },
+    { "name": "Session 5.2: Terraform basics", "duration": "1h" }
   ],
   "labs": [
-    { "name": "Lab 5.1: TCO & Pricing Calculator", "duration": "1h" }
+    { "name": "Lab 5.1: Terraform infra", "duration": "1h" }
   ]
 }

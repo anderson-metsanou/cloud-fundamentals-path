@@ -1,14 +1,14 @@
 {
   "id": "module-4",
-  "title": "Module 4 – Cloud Security Fundamentals",
-  "duration": "4h",
+  "title": "Module 4 – Cloud Management, Security & Cost Control",
+  "duration": "4.5h",
   "sessions": [
-    { "name": "Session 4.1: Identity and Access Management (IAM)", "duration": "1h" },
-    { "name": "Session 4.2: Encryption & Data Protection", "duration": "1h" },
-    { "name": "Session 4.3: Security Best Practices", "duration": "1h" }
+    { "name": "Session 4.1: IAM", "duration": "1h" },
+    { "name": "Session 4.2: Cost Mgmt", "duration": "1h" },
+    { "name": "Session 4.3: Monitoring & Logging", "duration": "0.5h" }
   ],
   "labs": [
-    { "name": "Lab 4.1: Configuring IAM Policies", "duration": "0.5h" },
-    { "name": "Lab 4.2: Securing a Storage Bucket", "duration": "0.5h" }
+    { "name": "Lab 4.1: IAM roles & policies", "duration": "1.5h" },
+    { "name": "Lab 4.2: Budget alert & bill analysis", "duration": "0.5h" }
   ]
 }

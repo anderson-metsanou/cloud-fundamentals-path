@@ -1,14 +1,17 @@
 {
   "id": "module-3",
-  "title": "Module 3 – Core Cloud Concepts",
-  "duration": "5h",
+  "title": "Module 3 – Core Cloud Services",
+  "duration": "9h",
   "sessions": [
-    { "name": "Session 3.1: Virtualization & Containers", "duration": "1.5h" },
-    { "name": "Session 3.2: Networking in the Cloud (VPCs, Subnets, Gateways)", "duration": "1.5h" },
-    { "name": "Session 3.3: Storage Models (Block, File, Object)", "duration": "1h" }
+    { "name": "Session 3.1: Compute", "duration": "1h" },
+    { "name": "Session 3.2: Storage", "duration": "1h" },
+    { "name": "Session 3.3: Networking", "duration": "1.5h" },
+    { "name": "Session 3.4: Containers", "duration": "1h" }
   ],
   "labs": [
-    { "name": "Lab 3.1: Deploying a VM", "duration": "0.5h" },
-    { "name": "Lab 3.2: Creating a Virtual Network", "duration": "0.5h" }
+    { "name": "Lab 3.1: VM + serverless", "duration": "1.5h" },
+    { "name": "Lab 3.2: Static website", "duration": "1h" },
+    { "name": "Lab 3.3: VPC connectivity", "duration": "1.5h" },
+    { "name": "Lab 3.4: Docker push", "duration": "1h" }
   ]
 }

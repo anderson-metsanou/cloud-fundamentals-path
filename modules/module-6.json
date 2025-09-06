@@ -1,14 +1,13 @@
 {
   "id": "module-6",
-  "title": "Module 6 – Cloud Architecture & Design",
-  "duration": "6h",
+  "title": "Module 6 – Capstone Project: Mini Cloud Application",
+  "duration": "7h",
   "sessions": [
-    { "name": "Session 6.1: High Availability & Fault Tolerance", "duration": "1.5h" },
-    { "name": "Session 6.2: Scalability & Elasticity", "duration": "1.5h" },
-    { "name": "Session 6.3: Designing for Performance & Reliability", "duration": "1h" }
+    { "name": "Session 6.1: Project planning", "duration": "1h" },
+    { "name": "Session 6.2: Infra with Terraform", "duration": "2h" },
+    { "name": "Session 6.3: App deployment + CI/CD", "duration": "2h" }
   ],
   "labs": [
-    { "name": "Lab 6.1: Building a Multi-Tier App", "duration": "1h" },
-    { "name": "Lab 6.2: Implementing Load Balancing", "duration": "1h" }
+    { "name": "Lab 6.1: Capstone project", "duration": "2h" }
   ]
 }

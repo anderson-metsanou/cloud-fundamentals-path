@@ -1,11 +1,9 @@
 {
   "id": "module-7",
-  "title": "Module 7 – Capstone Project",
-  "duration": "5h",
+  "title": "Module 7 – Wrap-Up & Next Steps",
+  "duration": "0.5h",
   "sessions": [
-    { "name": "Session 7.1: Project Guidelines & Expectations", "duration": "1h" }
+    { "name": "Session 7.1: Review & learning pathways", "duration": "0.5h" }
   ],
-  "labs": [
-    { "name": "Lab 7.1: Deploying a Cloud Solution End-to-End", "duration": "4h" }
-  ]
+  "labs": []
 }
