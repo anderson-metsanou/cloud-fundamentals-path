@@ -4,12 +4,232 @@
   "duration": "2h",
   "sessions": [
     {
-      "name": "Session 1.1: On-Prem vs Cloud",
-      "duration": "1h"
+      "name": "Session 1.1: On-Premises vs. The Cloud",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome to your first session! Today, we're going to dive into the most fundamental concept in cloud computing: the difference between running your technology \"on-premises\" and migrating it to the cloud. We'll explore this using the story of a fictional company, Amcloud, as it evolves its IT strategy. ☁️"
+        },
+        {
+          "type": "section",
+          "title": "🏢 Amcloud's Early Days: The On-Premises Reality",
+          "data": "Amcloud started as a small tech company running its entire e-commerce website and internal systems from its own office building. This is what we call an <strong>On-Premises</strong> setup. All their servers, databases, and network equipment were physically located in their server room."
+        },
+        {
+          "type": "section",
+          "title": "✅ The Pros of Amcloud's On-Premises Setup",
+          "data": "• <strong>Complete Control & Security</strong> 🔒: Amcloud's IT team had total mastery over their hardware, software, and data. This meant they could implement very specific security protocols and maintain full physical control of their assets.\n• <strong>Predictable Long-Term Costs</strong> 💵: After the initial high investment, the ongoing hardware costs were stable and predictable, primarily limited to power, cooling, and routine maintenance."
+        },
+        {
+          "type": "section",
+          "title": "⚠️ The Cons of Amcloud's On-Premises Setup",
+          "data": "• <strong>Massive Upfront Investment (CapEx)</strong> 💸: Buying all the necessary hardware was incredibly expensive. It was a huge, one-time expenditure that tied up a lot of capital.\n• <strong>Inflexible Scaling</strong> 🐢: During peak seasons like Black Friday, their website would slow down because their servers couldn't handle the traffic. To prevent this, they would have to buy more servers and keep them idle for most of the year. This made them slow to adapt and inefficient.\n• <strong>Maintenance Burden</strong> 🛠️: Their IT staff was constantly busy with operational tasks like patching servers, replacing failed hard drives, and managing power outages. This took time away from more innovative projects."
+        },
+        {
+          "type": "section",
+          "title": "☁️ Amcloud Embraces the Cloud: A Partnership",
+          "data": "Amcloud realized that managing its own data center was preventing it from growing. They decided to partner with a leading cloud service provider. Instead of owning hardware, they could now rent computing resources as a service. Think of it like a car: instead of buying one (on-premises), they started renting one for a road trip (cloud). 🚗"
+        },
+        {
+          "type": "section",
+          "title": "🌟 The Pros of the Cloud Partnership",
+          "data": "• <strong>Pay-as-you-go (OpEx)</strong> 💡: Amcloud no longer had to buy expensive servers. They simply paid for the resources they used, similar to a utility bill for electricity. This shifted their cost model from a large capital expense to a flexible operational one.\n• <strong>Instant & Automated Scalability</strong> ⚡: When Black Friday traffic surged, the cloud provider's platform automatically added more computing power to their website. When traffic returned to normal, it scaled back down, and Amcloud stopped paying for the extra resources.\n• <strong>Managed Services</strong> 🤝: The cloud provider's team took care of all the underlying hardware maintenance, security patching, and infrastructure management. This allowed Amcloud's IT team to focus on developing new features for their website."
+        },
+        {
+          "type": "section",
+          "title": "🚧 The Cons of the Cloud Partnership",
+          "data": "• <strong>Shared Responsibility</strong> 🛡️: While the cloud provider secured the underlying infrastructure, Amcloud's team was still responsible for securing their applications and data within the cloud environment. This is a critical concept we will cover in the next session.\n• <strong>Vendor Lock-in</strong> 🔗: Moving their entire infrastructure to the cloud meant their systems were now dependent on that provider's technology and services.\n• <strong>New Skill Set Required</strong> 📚: Amcloud's IT team had to learn how to manage and deploy resources in the cloud, which required new knowledge and certifications."
+        },
+        {
+          "type": "section",
+          "title": "🔄 Putting It All Together",
+          "data": "The choice between on-premises and the cloud is a fundamental trade-off between control and convenience. Most modern organizations, like Amcloud, don't use just one or the other. Instead, they adopt a <strong>hybrid cloud</strong> approach, using a mix of both on-premises and cloud resources to get the best of both worlds. 🌍"
+        },
+        {
+          "type": "section",
+          "title": "📚 For further reading",
+          "data": "<ul><li><a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-capex-vs-opex/\" target=\"_blank\" rel=\"noopener\">CapEx vs. OpEx explained</a></li><li><a href=\"https://www.ibm.com/cloud/learn/hybrid-cloud\" target=\"_blank\" rel=\"noopener\">What is Hybrid Cloud?</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Self-check Quiz 📝",
+          "questions": [
+            {
+              "q": "What term describes Amcloud's initial cost model, where the company had to make a large upfront investment in servers and equipment?",
+              "options": [
+                "Operating Expenses (OpEx)",
+                "Pay-as-you-go model",
+                "Capital Expenses (CapEx)",
+                "Cost of Goods Sold (COGS)"
+              ],
+              "answer": "Capital Expenses (CapEx)"
+            },
+            {
+              "q": "What was the main benefit of adopting the cloud for Amcloud during high-demand periods like Black Friday?",
+              "options": [
+                "Complete control over physical server security.",
+                "Elimination of all IT security responsibility.",
+                "Hardware maintenance managed by their own IT staff.",
+                "The ability to instantly and automatically scale their infrastructure to meet demand."
+              ],
+              "answer": "The ability to instantly and automatically scale their infrastructure to meet demand."
+            },
+            {
+              "q": "Which responsibilities generally remain with Amcloud and NOT the cloud provider? (Choose two)",
+              "options": [
+                "Managing their own application code and data.",
+                "Paying for electricity and cooling in the data center.",
+                "Repairing failed server hardware.",
+                "Managing user access roles and permissions within their cloud account."
+              ],
+              "answer": [
+                "Managing their own application code and data.",
+                "Managing user access roles and permissions within their cloud account."
+              ]
+            },
+            {
+              "q": "Which of the following is a major disadvantage of the on-premises model for a company like Amcloud?",
+              "options": [
+                "Lack of control over their data.",
+                "Need for staff to learn new skills.",
+                "High cost and difficulty of scaling to meet fluctuating demand.",
+                "High cost of renting servers."
+              ],
+              "answer": "High cost and difficulty of scaling to meet fluctuating demand."
+            },
+            {
+              "q": "If Amcloud decides to keep some sensitive customer data on its own servers while using the cloud for its public e-commerce site, what type of cloud deployment model is this?",
+              "options": [
+                "Public Cloud",
+                "Private Cloud",
+                "On-Premises",
+                "Hybrid Cloud"
+              ],
+              "answer": "Hybrid Cloud"
+            }
+          ]
+        }
+      ]
     },
     {
-      "name": "Session 1.2: Characteristics & Shared Responsibility",
-      "duration": "0.5h"
+      "name": "Session 1.2: Cloud Characteristics & The Shared Responsibility Model",
+      "duration": "0.5h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome back! In our last session, we saw how Amcloud moved from managing everything on-premises to a flexible cloud partnership. But what exactly makes \"the cloud\" so powerful? And who is responsible for what in this new partnership?"
+        },
+        {
+          "type": "section",
+          "title": "🌥️ The Five Cloud Characteristics",
+          "data": "According to the National Institute of Standards and Technology (NIST), any service that can be called \"cloud computing\" must have these five key traits:"
+        },
+        {
+          "type": "section",
+          "title": "1. On-Demand Self-Service 🖱️",
+          "data": "This is the ability for a user to provision computing resources (like a virtual server or storage) without human interaction. Amcloud's developers can spin up a new server for a project in minutes, all on their own."
+        },
+        {
+          "type": "section",
+          "title": "2. Broad Network Access 🌐",
+          "data": "Resources are available over the network and can be accessed by various devices (phones, laptops, tablets). Amcloud's team can manage their cloud infrastructure from anywhere with an internet connection."
+        },
+        {
+          "type": "section",
+          "title": "3. Resource Pooling 🗄️",
+          "data": "The cloud provider's resources are pooled to serve multiple customers using a multi-tenant model. Amcloud shares a large pool of physical servers with thousands of other companies. This is what makes the cloud so efficient and cost-effective."
+        },
+        {
+          "type": "section",
+          "title": "4. Rapid Elasticity 📈",
+          "data": "Resources can be scaled up or down quickly and automatically to meet demand. Amcloud's website automatically handled the Black Friday traffic surge, as we saw in the last session."
+        },
+        {
+          "type": "section",
+          "title": "5. Measured Service 💰",
+          "data": "Cloud usage is metered, allowing you to pay only for the resources you consume. Amcloud's finance team loves this because they get a detailed bill showing exactly what they used, just like a utility bill for electricity."
+        },
+        {
+          "type": "section",
+          "title": "🤝 The Shared Responsibility Model: Who Does What?",
+          "data": "This is the most important concept to master. When Amcloud moved to the cloud, it didn't transfer all of its security obligations to the cloud provider. Instead, responsibility is shared.\n\nThink of it as securing a house you're renting. The landlord (the cloud provider) is responsible for the physical security of the building itself—the walls, the roof, the windows. But you (the customer, Amcloud) are responsible for securing what's inside—locking the doors, setting up an alarm system, and protecting your valuable possessions."
+        },
+        {
+          "type": "section",
+          "title": "🔒 The Cloud Provider is responsible for:",
+          "data": "<strong>Security of the Cloud</strong>: This includes the physical data centers, the underlying hardware, networking, and the hypervisor (the software that creates and manages virtual machines). They ensure the infrastructure is secure and operational."
+        },
+        {
+          "type": "section",
+          "title": "🔑 The Customer (Amcloud) is responsible for:",
+          "data": "<strong>Security in the Cloud</strong>: This includes everything they run on the infrastructure. For Amcloud, this means:\n\n• Securing the operating system and applications.\n• Managing user access and permissions (IAM).\n• Protecting their data and implementing encryption.\n• Configuring firewalls and network security."
+        },
+        {
+          "type": "section",
+          "title": "ℹ️ Note",
+          "data": "The level of responsibility for the customer changes based on the cloud service model (IaaS, PaaS, SaaS), which we will explore in the next session."
+        },
+        {
+          "type": "section",
+          "title": "📚 For further reading",
+          "data": "<ul><li><a href=\"https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf\" target=\"_blank\" rel=\"noopener\">NIST Definition of Cloud Computing</a></li><li><a href=\"https://aws.amazon.com/compliance/shared-responsibility-model/\" target=\"_blank\" rel=\"noopener\">A detailed look at the Shared Responsibility Model</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Session 1.2 Knowledge Check 📝",
+          "questions": [
+            {
+              "q": "Which of the five cloud characteristics describes Amcloud's ability to automatically scale their website's resources during a traffic surge without any manual intervention?",
+              "options": [
+                "Broad Network Access",
+                "Resource Pooling",
+                "Rapid Elasticity",
+                "Measured Service"
+              ],
+              "answer": "Rapid Elasticity"
+            },
+            {
+              "q": "According to the Shared Responsibility Model, which party is responsible for protecting Amcloud's application code and data in the cloud?",
+              "options": [
+                "The Cloud Provider",
+                "Amcloud",
+                "A third-party security firm",
+                "Both the Cloud Provider and Amcloud"
+              ],
+              "answer": "Amcloud"
+            },
+            {
+              "q": "True or False: The concept of \"On-Demand Self-Service\" means that a user must contact the cloud provider's support team to provision new resources.",
+              "options": [
+                "True",
+                "False"
+              ],
+              "answer": "False"
+            },
+            {
+              "q": "Which characteristic is exemplified by Amcloud receiving a detailed bill for exactly the amount of computing resources they used for their website last month?",
+              "options": [
+                "Measured Service",
+                "Rapid Elasticity",
+                "Resource Pooling",
+                "On-Demand Self-Service"
+              ],
+              "answer": "Measured Service"
+            },
+            {
+              "q": "In the Shared Responsibility Model, the cloud provider is responsible for the security of the cloud, while Amcloud is responsible for the security in the cloud. Based on this, which of the following is the cloud provider's responsibility?",
+              "options": [
+                "Securing Amcloud's data",
+                "Managing user permissions for Amcloud's account",
+                "Maintaining the physical data center and hardware",
+                "Configuring firewalls for Amcloud's application"
+              ],
+              "answer": "Maintaining the physical data center and hardware"
+            }
+          ]
+        }
+      ]
     }
   ],
   "labs": [
