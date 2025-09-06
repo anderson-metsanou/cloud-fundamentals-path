@@ -231,8 +231,8 @@
         },
         {
           "type": "image",
-          "src": "https://storage.googleapis.com/cloud-training-assets/networking/architecture-example.png",
-          "alt": "Example of Amcloud Networking Architecture"
+          "src": "../images/vpc-diagram.png",
+          "alt": "aws vpc components"
         },
         {
           "type": "section",
@@ -300,13 +300,270 @@
         }
       ]
     },
-    { "name": "Session 3.4: Containers", "duration": "1h" }
+    {
+      "name": "Session 3.4: Containers",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "👋 Welcome back! In this session, we're going to dive into a crucial topic for modern cloud development: <strong>Containers</strong>. 📦 Containers are a way to package your application and its dependencies into a single, portable unit, ensuring it runs the same way everywhere."
+        },
+        {
+          "type": "section",
+          "title": "🧩 I. What is a Container?",
+          "data": "Think of a container as a lightweight, standalone package for your code. It includes everything your application needs to run: the code itself, a runtime (like Python or Node.js), system tools, libraries, and settings. Unlike a virtual machine, a container shares the host operating system's kernel, which makes it much more efficient and faster to start.<br><br><b>Amcloud Scenario:</b> Amcloud's development team used to struggle with \"it works on my machine!\" issues. A developer would build a new feature, but when the code was moved to a testing environment or a production server, it would break due to missing libraries or configuration differences. By packaging their application into a container, they solved this problem. Now, the container guarantees that the application runs identically on a developer's laptop, in a testing environment, and on a production server."
+        },
+        {
+          "type": "section",
+          "title": "❓ II. Why Containers?",
+          "data": "<b>Before containers, developers would often deploy applications directly onto virtual machines. This led to a series of common problems:</b><br><br>• <strong>Dependency Hell</strong> 😵‍💫: An application might require a specific version of a library that conflicts with another application on the same VM.<br>• <strong>Inconsistency</strong> 🔄: The application runs on the developer's laptop but fails in production because the operating systems or environments are slightly different.<br>• <strong>Slow Deployment</strong> 🐢: Setting up a new VM for each application is time-consuming and resource-intensive.<br><br>Containers solve these problems by providing an isolated, consistent, and portable environment for your application. They encapsulate everything needed to run, so the application is no longer dependent on the underlying host system."
+        },
+        {
+          "type": "section",
+          "title": "🤖 III. Container Orchestration",
+          "data": "While a single container is useful, managing hundreds or thousands of them can be a nightmare. This is where <strong>Container Orchestration</strong> comes in. An orchestrator is a tool that automates the deployment, scaling, networking, and management of containers.<br><br><b>Amcloud Scenario:</b> Amcloud's e-commerce website is made up of dozens of different services (shopping cart, user authentication, product catalog). Instead of manually launching each container and linking them together, Amcloud uses a managed orchestration service. This service handles all the complexity: it automatically starts new containers when traffic increases, moves them if a server fails, and ensures they can all communicate with each other.<br><br><b>Examples of Cloud Services for Containers:</b><br>• AWS: Amazon Elastic Container Service (ECS) and Amazon Elastic Kubernetes Service (EKS)<br>• Azure: Azure Container Instances and Azure Kubernetes Service (AKS)<br>• GCP: Cloud Run and Google Kubernetes Engine (GKE)"
+        },
+        {
+          "type": "section",
+          "title": "🌟 IV. The Benefits of Containers",
+          "data": "• <strong>Portability</strong> 🚚: Containers can run on any system that has a container engine, whether it’s a laptop, an on-premises server, or a cloud platform. This makes migration and development much easier.<br>• <strong>Efficiency</strong> ⚡: They are lightweight and use fewer resources than traditional VMs. You can run many more containers on a single physical machine.<br>• <strong>Scalability</strong> 📈: It's very easy to scale applications by simply launching more container instances. Orchestration platforms automate this process.<br>• <strong>Consistency</strong> 🔁: The \"package everything\" approach ensures that the application behaves the same across all environments, from development to production."
+        },
+        {
+          "type": "section",
+          "title": "🏠 V. Containers vs. Virtual Machines (VMs)",
+          "data": "<b>This is a key distinction. While both virtualize a system, they do so at different levels.</b><br><br><table class='table-auto w-full border border-slate-300 text-sm text-left mt-3'><thead class='bg-slate-100'><tr><th class='border border-slate-300 px-3 py-2 font-semibold'>Feature</th><th class='border border-slate-300 px-3 py-2 font-semibold'>Virtual Machine (VM)</th><th class='border border-slate-300 px-3 py-2 font-semibold'>Container</th></tr></thead><tbody><tr><td class='border border-slate-300 px-3 py-2'>Abstraction</td><td class='border border-slate-300 px-3 py-2'>Hardware</td><td class='border border-slate-300 px-3 py-2'>Operating System</td></tr><tr><td class='border border-slate-300 px-3 py-2'>Size</td><td class='border border-slate-300 px-3 py-2'>Large (GBs)</td><td class='border border-slate-300 px-3 py-2'>Small (MBs)</td></tr><tr><td class='border border-slate-300 px-3 py-2'>Boot Time</td><td class='border border-slate-300 px-3 py-2'>Minutes</td><td class='border border-slate-300 px-3 py-2'>Seconds</td></tr><tr><td class='border border-slate-300 px-3 py-2'>Isolation</td><td class='border border-slate-300 px-3 py-2'>Strong (each has its own OS)</td><td class='border border-slate-300 px-3 py-2'>Moderate (shares host OS kernel)</td></tr></tbody></table><br><b>Analogy:</b> 🏡 A VM is like a full house, with its own foundation, walls, and utilities. A Container is like a pre-packaged apartment that you can place inside that house, sharing the same foundation and utilities, but with its own isolated rooms."
+        },
+        {
+          "type": "section",
+          "title": "📚 For Further Reading",
+          "data": "<ul><li>🔗 <a href=\"https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-are-containers/\" target=\"_blank\" rel=\"noopener\">What is a Container?</a></li><li>🔗 <a href=\"https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/\" target=\"_blank\" rel=\"noopener\">Introduction to Kubernetes</a></li></ul>"
+        },
+        {
+          "type": "quiz",
+          "title": "Session 3.4 Knowledge Check 📝",
+          "questions": [
+            {
+              "q": "A key advantage of containers over virtual machines is their:",
+              "options": [
+                "Larger size",
+                "Slower boot time",
+                "Portability and lightweight nature",
+                "Stronger hardware isolation"
+              ],
+              "answer": "Portability and lightweight nature"
+            },
+            {
+              "q": "What is the primary purpose of a container orchestration service like GKE or AKS? (Select two)",
+              "options": [
+                "To manually start and stop individual containers.",
+                "To automate the scaling and management of containers.",
+                "To replace the need for a physical server.",
+                "To manage networking and resource allocation for a group of containers."
+              ],
+              "answer": [
+                "To automate the scaling and management of containers.",
+                "To manage networking and resource allocation for a group of containers."
+              ]
+            },
+            {
+              "q": "Amcloud's development team packages their application into a single unit that includes all dependencies. This is known as a:",
+              "options": [
+                "Virtual Machine (VM)",
+                "Operating System (OS)",
+                "Container",
+                "Serverless Function"
+              ],
+              "answer": "Container"
+            },
+            {
+              "q": "True or False: A container has its own full operating system, completely isolated from the host OS.",
+              "options": [
+                "True",
+                "False"
+              ],
+              "answer": "False"
+            },
+            {
+              "q": "Amcloud uses a service to automatically handle the deployment and scaling of its containerized applications. This service is a:",
+              "options": [
+                "Container runtime",
+                "Container orchestrator",
+                "Virtual machine",
+                "Load balancer"
+              ],
+              "answer": "Container orchestrator"
+            }
+          ]
+        }
+      ]
+    }
   ],
   "labs": [
-    { "name": "Lab 3.1: VM + serverless", "duration": "1.5h" },
-    { "name": "Lab 3.2: Static website", "duration": "1h" },
-    { "name": "Lab 3.3: VPC connectivity", "duration": "1.5h" },
-    { "name": "Lab 3.4: Docker push", "duration": "1h" }
+    {
+      "name": "Lab 3.1: VM + serverless",
+      "duration": "1.5h",
+      "content": [
+        {
+          "type": "text",
+          "data": "🧪 <strong>Lab 3.1: VM + Serverless on AWS</strong>\n\n<b>Objective:</b> This lab will demonstrate how to deploy an image processing application on a Virtual Machine (VM) and then compare it to a serverless function."
+        },
+        {
+          "type": "section",
+          "title": "📝 Prerequisites",
+          "data": "• An active AWS account.\n• A web browser."
+        },
+        {
+          "type": "section",
+          "title": "🚀 Step 1: Creating the Virtual Machine (VM)",
+          "data": "We'll start by creating a VM, which is called an EC2 instance in AWS. This is the most basic \"compute service.\"\n\n<b>Login:</b> Log in to the AWS Management Console. In the search bar, type <strong>EC2</strong> and click the service.\n\n<b>Launch an Instance:</b>\n1. Click on <strong>\"Launch instance\"</strong>.\n2. Give your instance a name: <code>amcloud-image-processor-vm</code>.\n3. Choose an Amazon Machine Image (AMI), for example, the <strong>Amazon Linux 2023 AMI (Free Tier)</strong>.\n4. Select an instance type, for example, <strong>t2.micro (Free Tier)</strong>.\n5. Under \"Key pair (login)\", choose an existing key pair or create a new one. <b>Make sure to download and save it!</b>\n6. For network settings, choose a default VPC.\n7. For security group rules, you can leave the default settings for this lab.\n8. Click on <strong>\"Launch instance\"</strong>.\n\n<b>Verification:</b> Wait a few minutes. In the EC2 dashboard, you will see your instance's status change from \"pending\" to \"running.\" Your VM is now operational, but it isn't doing anything yet."
+        },
+        {
+          "type": "section",
+          "title": "⚡ Step 2: Creating the Serverless Function (AWS Lambda)",
+          "data": "Next, we'll create a serverless function. This is a completely different approach where you don't manage a server.\n\n<b>Login:</b> In the AWS Console search bar, type <strong>Lambda</strong> and click the service.\n\n<b>Create a Function:</b>\n1. Click on <strong>\"Create function\"</strong>.\n2. Select <strong>\"Author from scratch\"</strong>.\n3. Give it a name: <code>amcloud-image-processor-function</code>.\n4. Choose a \"Runtime,\" for example, <strong>Node.js 20.x</strong>.\n5. For the execution role, select <strong>\"Create a new role with basic Lambda permissions\"</strong>.\n6. Click on <strong>\"Create function\"</strong>.\n\n<b>Function Code:</b>\nOnce the function is created, you can see the default code in the code editor.\n\nImagine that you would insert the image processing code here. You don't have to worry about dependencies or the server that runs it."
+        },
+        {
+          "type": "section",
+          "title": "🔍 Step 3: Comparison",
+          "data": "<b>VM:</b> You had to choose the machine type, the operating system, and manage the network and security. It is your responsibility to keep this machine up to date.\n\n<b>Serverless:</b> You only had to provide your code and the basic configuration. AWS manages the server, the OS, and the scalability. You only pay when your code runs."
+        },
+        {
+          "type": "section",
+          "title": "✅ Conclusion",
+          "data": "For a simple task like image processing, the serverless approach is much more efficient and cost-effective. However, for applications that require total control of the operating system or run continuously, the VM remains a relevant option."
+        },
+        {
+          "type": "section",
+          "title": "🧹 Cleanup",
+          "data": "To avoid incurring any unexpected costs, make sure to delete the resources you provisioned during this lab.\n\n<b>Terminate the EC2 instance:</b> Go to the EC2 dashboard, select your <code>amcloud-image-processor-vm</code> instance, click on \"Instance state\", and then \"Terminate instance\".\n\n<b>Delete the Lambda function:</b> Go to the Lambda dashboard, select your <code>amcloud-image-processor-function</code>, and click on \"Actions\" and then \"Delete\"."
+        }
+      ]
+    },
+    {
+      "name": "Lab 3.2: Static Website Deployment on AWS",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "🧪 <strong>Lab 3.2: Static Website Deployment on AWS</strong>\n\n<b>Objective:</b> This lab will demonstrate how to deploy a simple static website using Amazon S3 (Object Storage) and then make it publicly accessible."
+        },
+        {
+          "type": "section",
+          "title": "📝 Prerequisites",
+          "data": "• An active AWS account.\n• A web browser.\n• A simple HTML file (e.g., <code>index.html</code>)."
+        },
+        {
+          "type": "section",
+          "title": "🚀 Step 1: Create an S3 Bucket",
+          "data": "An S3 bucket is where you will store your website's files. The name of the bucket must be globally unique.\n\n<b>Login:</b> Log in to the AWS Management Console. In the search bar, type <strong>S3</strong> and click the service.\n\n<b>Create a Bucket:</b>\n1. Click on <strong>\"Create bucket\"</strong>.\n2. Bucket name: Choose a globally unique name (e.g., <code>amcloud-static-website-yourname</code>).\n3. AWS Region: Select a region close to you.\n4. Leave all other settings at defaults, except for <strong>Object Ownership</strong>. Select <strong>ACLs enabled</strong> → <strong>Bucket owner preferred</strong>.\n5. Click <strong>\"Create bucket\"</strong>."
+        },
+        {
+          "type": "section",
+          "title": "📂 Step 2: Upload Your Website Files",
+          "data": "1. Navigate to the bucket you just created.\n2. Click on <strong>\"Upload\"</strong>.\n3. Click <strong>\"Add files\"</strong> and select your <code>index.html</code> file (plus CSS/JS/images if any).\n4. Click <strong>\"Upload\"</strong>."
+        },
+        {
+          "type": "section",
+          "title": "🌐 Step 3: Enable Static Website Hosting",
+          "data": "By default, the files are not public. Enable static website hosting:\n\n1. Go to your bucket's <strong>Properties</strong> tab.\n2. Scroll down to <strong>Static website hosting</strong> → <strong>Edit</strong>.\n3. Select <strong>Enable</strong>.\n4. Index document: <code>index.html</code>.\n5. Error document: <code>error.html</code> (optional).\n6. Save changes."
+        },
+        {
+          "type": "section",
+          "title": "🔑 Step 4: Update Bucket Policy",
+          "data": "To allow public access, set a bucket policy.\n\n1. Go to the <strong>Permissions</strong> tab → <strong>Bucket policy</strong> → <strong>Edit</strong>.\n2. Paste this JSON policy (replace <code>YOUR_BUCKET_NAME</code>):\n\n<div class='relative bg-slate-900 text-slate-100 rounded-md p-3 font-mono text-sm'>\n  <button type='button' data-copy-target='bucket-policy-json' class='copy-btn absolute top-2 right-2 bg-sky-600 hover:bg-sky-700 text-white text-xs px-2 py-1 rounded'>Copy</button>\n  <pre><code id='bucket-policy-json'>{\n    \"Version\": \"2012-10-17\",\n    \"Statement\": [\n        {\n            \"Sid\": \"PublicReadGetObject\",\n            \"Effect\": \"Allow\",\n            \"Principal\": \"*\",\n            \"Action\": \"s3:GetObject\",\n            \"Resource\": \"arn:aws:s3:::YOUR_BUCKET_NAME/*\"\n        }\n    ]\n}</code></pre>\n</div>\n\n3. Save changes."
+        },
+        {
+          "type": "section",
+          "title": "🧪 Step 5: Test Your Website",
+          "data": "1. Go to <strong>Properties</strong> → <strong>Static website hosting</strong>.\n2. Copy the <strong>Bucket website endpoint</strong> URL.\n3. Paste it in your browser → Your site is now live 🎉."
+        },
+        {
+          "type": "section",
+          "title": "🧹 Cleanup",
+          "data": "To avoid costs:\n\n1. Empty the bucket: In the <strong>Objects</strong> tab, click <strong>Empty</strong>.\n2. Delete the bucket: Go back to <strong>Buckets list</strong>, select your bucket, click <strong>Delete</strong>, and confirm by typing its name."
+        },
+        {
+          "type": "section",
+          "title": "📋 Copy Code Support",
+          "data": "<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.copy-btn').forEach(function(btn){btn.addEventListener('click',function(e){var targetId=btn.getAttribute('data-copy-target');var code=document.getElementById(targetId);if(code){var text=code.innerText||code.textContent;navigator.clipboard.writeText(text).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},1200);});}});});});</script>"
+        }
+      ]
+    },
+    {
+      "name": "Lab 3.3: VPC Connectivity on AWS",
+      "duration": "1.5h",
+      "content": [
+        {
+          "type": "text",
+          "data": "🧪 <strong>Lab 3.3: VPC Connectivity on AWS</strong>\n\n<b>Objective:</b> This lab will demonstrate how to create a Virtual Private Cloud (VPC), configure subnets, and establish secure connectivity, mimicking a typical Amcloud setup."
+        },
+        {
+          "type": "section",
+          "title": "📝 Prerequisites",
+          "data": "• An active AWS account.\n• A web browser."
+        },
+        {
+          "type": "section",
+          "title": "🚀 Step 1: Create a VPC",
+          "data": "The VPC will be our isolated, private network in the cloud.\n\n<b>Login:</b> Log in to the AWS Management Console. In the search bar, type <strong>VPC</strong> and click on the service.\n\n<b>Create VPC:</b>\n1. In the navigation pane, click on <strong>VPCs</strong>.\n2. Click on <strong>Create VPC</strong>.\n3. Select <strong>VPC and more</strong>.\n4. Name tag auto-generation: Give your VPC a name, e.g., <code>amcloud-main-vpc</code>.\n5. IPv4 CIDR block: Use <code>10.0.0.0/16</code>.\n6. Availability Zones (AZs): Choose one or two AZs.\n7. Subnets: Configure one <strong>public</strong> and one <strong>private</strong> subnet.\n8. Click <strong>Create VPC</strong>."
+        },
+        {
+          "type": "section",
+          "title": "🌍 Step 2: Launch a Web Server in the Public Subnet",
+          "data": "This EC2 instance represents a web server accessible from the internet.\n\n<b>Navigate to EC2:</b> In the AWS Console, type <strong>EC2</strong> and go to the dashboard.\n\n<b>Launch an Instance:</b>\n1. Click on <strong>Launch instance</strong>.\n2. Name: <code>amcloud-web-server</code>.\n3. AMI: Choose Amazon Linux 2023 (Free tier).\n4. Instance type: <code>t2.micro</code> (Free tier).\n5. Key pair: Choose or create a new one.\n6. Network settings:\n   • VPC: <code>amcloud-main-vpc</code>\n   • Subnet: Public subnet\n   • Auto-assign Public IP: Enabled\n7. Security group: Create a new group. Add inbound rule: allow <strong>HTTP (port 80)</strong> from <code>0.0.0.0/0</code>.\n8. Click <strong>Launch instance</strong>."
+        },
+        {
+          "type": "section",
+          "title": "💾 Step 3: Launch a Database in the Private Subnet",
+          "data": "This EC2 instance represents a private database.\n\n<b>Launch an Instance:</b>\n1. Go back to the EC2 dashboard and click <strong>Launch instance</strong>.\n2. Name: <code>amcloud-database</code>.\n3. AMI & type: Amazon Linux 2023, <code>t2.micro</code>.\n4. Network settings:\n   • VPC: <code>amcloud-main-vpc</code>\n   • Subnet: Private subnet\n   • Auto-assign Public IP: Disabled\n5. Security group: Only allow inbound traffic on database port (e.g., <code>3306</code> for MySQL) from the <strong>web server’s security group</strong>. This ensures only the web server can connect.\n6. Click <strong>Launch instance</strong>."
+        },
+        {
+          "type": "section",
+          "title": "🔍 Step 4: Verify Connectivity",
+          "data": "• <b>Public Server:</b> From your browser, access the public IP of <code>amcloud-web-server</code>. It should load (empty page).\n• <b>Private Server:</b> Try accessing the database instance’s IP from your browser — it should <strong>time out</strong>, confirming isolation."
+        },
+        {
+          "type": "section",
+          "title": "🧹 Cleanup",
+          "data": "To avoid charges, delete resources after the lab:\n\n1. <b>Terminate Instances:</b> In EC2, select both <code>amcloud-web-server</code> and <code>amcloud-database</code>, then <strong>Instance state → Terminate</strong>.\n2. <b>Delete VPC:</b> In VPC dashboard, select <code>amcloud-main-vpc</code> → <strong>Actions → Delete VPC</strong>. Make sure dependent resources are removed first."
+        }
+      ]
+    },
+    {
+      "name": "Lab 3.4: Docker push",
+      "duration": "1h",
+      "content": [
+        {
+          "type": "text",
+          "data": "🧪 <strong>Lab 3.4: Build and Push a Docker Image to Amazon ECR</strong>\n\nThis document provides a simple, step-by-step guide to containerizing a basic web application and deploying it to Amazon Elastic Container Registry (ECR)."
+        },
+        {
+          "type": "section",
+          "title": "🚀 Step 1: Create an ECR Repository",
+          "data": "1. Navigate to the AWS Management Console.\n2. Search for <strong>ECR</strong> and select <strong>Elastic Container Registry</strong>.\n3. Click <strong>Create repository</strong>.\n4. Give your repository a name (e.g., <code>amcloud-app-repo</code>) and click <strong>Create repository</strong>."
+        },
+        {
+          "type": "section",
+          "title": "🛠️ Step 2: Create a Local Docker Image",
+          "data": "1. Create a new working directory on your local machine.\n2. Inside this directory, create a file named <code>Dockerfile</code>.\n3. Also, create a file named <code>index.html</code> in the same directory.\n\n<b>index.html content:</b>\n<div class='relative bg-slate-900 text-slate-100 rounded-md p-3 font-mono text-sm'>\n  <button type='button' data-copy-target='docker-index-html' class='copy-btn absolute top-2 right-2 bg-sky-600 hover:bg-sky-700 text-white text-xs px-2 py-1 rounded'>Copy</button>\n  <pre><code id='docker-index-html'>&lt;h1&gt;Hello, Amcloud!&lt;/h1&gt;\n&lt;p&gt;This page is served from a Docker container.&lt;/p&gt;</code></pre>\n</div>\n\n<b>Dockerfile content:</b>\n<div class='relative bg-slate-900 text-slate-100 rounded-md p-3 font-mono text-sm'>\n  <button type='button' data-copy-target='dockerfile-content' class='copy-btn absolute top-2 right-2 bg-sky-600 hover:bg-sky-700 text-white text-xs px-2 py-1 rounded'>Copy</button>\n  <pre><code id='dockerfile-content'>FROM nginx:latest\nCOPY index.html /usr/share/nginx/html\nEXPOSE 80</code></pre>\n</div>\n\n4. Open your terminal, navigate to your working directory, and build the Docker image:\n<div class='relative bg-slate-900 text-slate-100 rounded-md p-3 font-mono text-sm'>\n  <button type='button' data-copy-target='docker-build-cmd' class='copy-btn absolute top-2 right-2 bg-sky-600 hover:bg-sky-700 text-white text-xs px-2 py-1 rounded'>Copy</button>\n  <pre><code id='docker-build-cmd'>docker build -t amcloud-web-app .</code></pre>\n</div>"
+        },
+        {
+          "type": "section",
+          "title": "🔑 Step 3: Authenticate Docker to ECR",
+          "data": "1. Go back to the AWS ECR console and click on your newly created repository.\n2. Click <strong>View push commands</strong> in the top-right corner.\n3. Copy the first command (the <code>get-login-password</code> command) and run it in your terminal. This will authenticate your Docker client for 12 hours."
+        },
+        {
+          "type": "section",
+          "title": "📤 Step 4: Push the Image to ECR",
+          "data": "1. From the same <strong>View push commands</strong> window, copy and run the second command (<code>docker tag</code>).\n\nExample:\n<div class='relative bg-slate-900 text-slate-100 rounded-md p-3 font-mono text-sm'>\n  <button type='button' data-copy-target='docker-tag-cmd' class='copy-btn absolute top-2 right-2 bg-sky-600 hover:bg-sky-700 text-white text-xs px-2 py-1 rounded'>Copy</button>\n  <pre><code id='docker-tag-cmd'>docker tag amcloud-web-app:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/amcloud-app-repo:latest</code></pre>\n</div>\n\n2. Copy and run the third command (<code>docker push</code>) to push your local image to the ECR repository.\n\nExample:\n<div class='relative bg-slate-900 text-slate-100 rounded-md p-3 font-mono text-sm'>\n  <button type='button' data-copy-target='docker-push-cmd' class='copy-btn absolute top-2 right-2 bg-sky-600 hover:bg-sky-700 text-white text-xs px-2 py-1 rounded'>Copy</button>\n  <pre><code id='docker-push-cmd'>docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/amcloud-app-repo:latest</code></pre>\n</div>\n\nOnce complete, your Docker image will be stored in ECR, ready for deployment with services like ECS or EKS."
+        },
+        {
+          "type": "section",
+          "title": "📋 Copy Code Support",
+          "data": "<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.copy-btn').forEach(function(btn){btn.addEventListener('click',function(e){var targetId=btn.getAttribute('data-copy-target');var code=document.getElementById(targetId);if(code){var text=code.innerText||code.textContent;navigator.clipboard.writeText(text).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},1200);});}});});});</script>"
+        }
+      ]
+    }
   ]
 }
-    
+
