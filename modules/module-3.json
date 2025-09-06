@@ -231,7 +231,7 @@
         },
         {
           "type": "image",
-          "src": "../images/vpc-diagram.png",
+          "src": "./images/vpc-diagram.png",
           "alt": "aws vpc components"
         },
         {
