@@ -22,14 +22,29 @@
           "data": "A VM is a virtualized computer running on a physical server in a data center. It's the most flexible compute service, giving you full control over the operating system. You can choose the size of the VM (CPU, RAM), the operating system (Windows, Linux), and configure its networking and storage.\n\n<b>Amcloud Scenario:</b> Amcloud's IT team needs to host their main e-commerce website on a reliable and configurable platform. They chose a VM because it gives them complete control. They can install a specific version of a web server (like Apache) and set up custom security patches that meet their compliance requirements. They can also manually scale up the VM's resources when they anticipate high traffic.\n\n<b>Analogy:</b> This is like renting a car from a rental agency. You get the whole car (the VM), and you are responsible for everything inside, from the music you play to how you manage the passenger's luggage."
         },
         {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-vm1.drawio.png",
+          "alt": "amcloud main website's vm architecture"
+        },
+        {
           "type": "section",
           "title": "2. Containers 📦",
           "data": "A container is a lightweight, portable package that includes an application and all its dependencies (libraries, frameworks, and configuration files). Containers are more efficient than VMs because they share the host operating system. This makes them ideal for modern, microservice-based applications.\n\n<b>Amcloud Scenario:</b> Amcloud's development team is building a new recommendation engine for their website. Instead of building it as part of the main application, they create it as a separate, small service. They package this service into a container. This ensures that the recommendation engine runs consistently, whether it's on a developer's laptop, in a testing environment, or on a production server in the cloud. They can update the recommendation engine without affecting the rest of the website.\n\n<b>Analogy:</b> This is like a pre-packed bento box. Everything you need for your meal is neatly organized and fits in a small, portable box. You don't need to rent an entire kitchen; you just need a surface to place your bento box on."
         },
         {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-vm+container.drawio.png",
+          "alt": "amcloud main website's vm+container architecture"
+        },
+        {
           "type": "section",
           "title": "3. Serverless Computing (Functions) 🚀",
           "data": "Serverless computing allows you to run your code without provisioning or managing any servers. You simply upload your code, and the cloud provider handles all the server management, scaling, and maintenance. The key benefit is that you only pay when your code is running.\n\n<b>Amcloud Scenario:</b> Amcloud's marketing team wants to run a small piece of code that sends an email notification every time a new customer signs up. Instead of using a VM that runs 24/7, they use a serverless function. The function is triggered automatically by the sign-up event. The function only runs for a few seconds to send the email, and Amcloud is only billed for that brief moment of execution, making it extremely cost-effective.\n\n<b>Analogy:</b> This is like hiring a contractor to do a single, small task. You just tell them what to do (e.g., \"fix this leaky faucet\"), and they handle all the tools and logistics. You pay only for the work done, not for the time they spend waiting for another task."
+        },
+        {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-vm+container+serverless.drawio.png",
+          "alt": "amcloud main website's vm+container+serverless architecture"
         },
         {
           "type": "section",
@@ -116,14 +131,29 @@
           "data": "Object storage is used to store unstructured data like images, videos, documents, and backups. Data is stored as \"objects\" in a flat structure, not in folders like a traditional file system. Each object has a unique identifier and metadata.\n\n<b>Amcloud Scenario:</b> Amcloud's e-commerce website has a massive catalog of product images and videos. The marketing team uploads new assets every day. Object storage is the perfect solution for this because it is highly scalable, durable, and cost-effective. Amcloud can store petabytes of data without worrying about server capacity.\n\n<b>Examples from Cloud Providers:</b>\n• AWS: Simple Storage Service (S3)\n• Azure: Blob Storage\n• GCP: Cloud Storage\n\n<b>Analogy:</b> Think of this as a digital locker room where you can store anything you want. You don't have to worry about where things go; you just put your stuff in a locker and get a key to access it later."
         },
         {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-object-storage.drawio.png",
+          "alt": "amcloud main website's object storage architecture"
+        },
+        {
           "type": "section",
           "title": "🔹 2. Block Storage 🗄️",
           "data": "Block storage is a type of storage that organizes data into blocks, and each block can be independently controlled and configured. It is the raw data storage that is attached to a virtual machine (VM). This is the traditional way to store data on a hard drive.\n\n<b>Amcloud Scenario:</b> Amcloud's main database, which powers its e-commerce website, requires very low latency and high performance. The IT team uses block storage for this database. It is directly connected to their VM, providing the fast I/O performance needed for a high-traffic database.\n\n<b>Examples from Cloud Providers:</b>\n• AWS: Elastic Block Store (EBS)\n• Azure: Disk Storage\n• GCP: Persistent Disk\n\n<b>Analogy:</b> This is like a single, empty hard drive you plug directly into your computer. You can format it and install an operating system on it, and it gives you direct control over the data."
         },
         {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-block-storage.drawio.png",
+          "alt": "amcloud main website's block storage architecture"
+        },
+        {
           "type": "section",
           "title": "🔹 3. File Storage 📁",
           "data": "File storage, also known as shared file systems, allows multiple VMs or users to access the same file storage simultaneously. It is based on a traditional hierarchy of files and folders.\n\n<b>Amcloud Scenario:</b> The creative design team at Amcloud needs to share large design files, mockups, and videos. Instead of each designer storing a copy on their local machine, they use file storage. Everyone can access the same shared folder, ensuring that they are all working on the most recent version of a file.\n\n<b>Examples from Cloud Providers:</b>\n• AWS: Elastic File System (EFS)\n• Azure: Azure Files\n• GCP: Filestore\n\n<b>Analogy:</b> This is just like a shared network drive in a traditional office. Everyone with permission can see the same folders and files."
+        },
+        {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-file-storage.drawio.png",
+          "alt": "amcloud main website's file storage architecture"
         },
         {
           "type": "section",
@@ -231,8 +261,8 @@
         },
         {
           "type": "image",
-          "src": "./images/vpc-diagram.png",
-          "alt": "aws vpc components"
+          "src": "./images/amcloud-host-main-website-vm1.drawio.png",
+          "alt": "amcloud main website's vm architecture"
         },
         {
           "type": "section",
@@ -312,6 +342,11 @@
           "type": "section",
           "title": "🧩 I. What is a Container?",
           "data": "Think of a container as a lightweight, standalone package for your code. It includes everything your application needs to run: the code itself, a runtime (like Python or Node.js), system tools, libraries, and settings. Unlike a virtual machine, a container shares the host operating system's kernel, which makes it much more efficient and faster to start.<br><br><b>Amcloud Scenario:</b> Amcloud's development team used to struggle with \"it works on my machine!\" issues. A developer would build a new feature, but when the code was moved to a testing environment or a production server, it would break due to missing libraries or configuration differences. By packaging their application into a container, they solved this problem. Now, the container guarantees that the application runs identically on a developer's laptop, in a testing environment, and on a production server."
+        },
+        {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-vm+container.drawio.png",
+          "alt": "amcloud main website's vm+container architecture"
         },
         {
           "type": "section",

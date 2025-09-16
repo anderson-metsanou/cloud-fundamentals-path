@@ -17,6 +17,11 @@
           "data": "Amcloud started as a small tech company running its entire e-commerce website and internal systems from its own office building. This is what we call an <strong>On-Premises</strong> setup. All their servers, databases, and network equipment were physically located in their server room."
         },
         {
+          "type": "image",
+          "src": "./images/amcloud-on-prem-network-arch4.drawio.png",
+          "alt": "amcloud on-premises network architecture"
+        },
+        {
           "type": "section",
           "title": "✅ The Pros of Amcloud's On-Premises Setup",
           "data": "• <strong>Complete Control & Security</strong> 🔒: Amcloud's IT team had total mastery over their hardware, software, and data. This meant they could implement very specific security protocols and maintain full physical control of their assets.\n• <strong>Predictable Long-Term Costs</strong> 💵: After the initial high investment, the ongoing hardware costs were stable and predictable, primarily limited to power, cooling, and routine maintenance."
@@ -30,6 +35,11 @@
           "type": "section",
           "title": "☁️ Amcloud Embraces the Cloud: A Partnership",
           "data": "Amcloud realized that managing its own data center was preventing it from growing. They decided to partner with a leading cloud service provider. Instead of owning hardware, they could now rent computing resources as a service. Think of it like a car: instead of buying one (on-premises), they started renting one for a road trip (cloud). 🚗"
+        },
+        {
+          "type": "image",
+          "src": "./images/amcloud-cloud-network-arch-v2-1.drawio.png",
+          "alt": "amcloud cloud network architecture"
         },
         {
           "type": "section",
@@ -164,6 +174,11 @@
           "type": "section",
           "title": "🔑 The Customer (Amcloud) is responsible for:",
           "data": "<strong>Security in the Cloud</strong>: This includes everything they run on the infrastructure. For Amcloud, this means:\n\n• Securing the operating system and applications.\n• Managing user access and permissions (IAM).\n• Protecting their data and implementing encryption.\n• Configuring firewalls and network security."
+        },
+        {
+          "type": "image",
+          "src": "./images/amcloud-responsibilities-table1.drawio.png",
+          "alt": "amcloud on-premises network architecture"
         },
         {
           "type": "section",
