@@ -359,6 +359,11 @@
           "data": "While a single container is useful, managing hundreds or thousands of them can be a nightmare. This is where <strong>Container Orchestration</strong> comes in. An orchestrator is a tool that automates the deployment, scaling, networking, and management of containers.<br><br><b>Amcloud Scenario:</b> Amcloud's e-commerce website is made up of dozens of different services (shopping cart, user authentication, product catalog). Instead of manually launching each container and linking them together, Amcloud uses a managed orchestration service. This service handles all the complexity: it automatically starts new containers when traffic increases, moves them if a server fails, and ensures they can all communicate with each other.<br><br><b>Examples of Cloud Services for Containers:</b><br>• AWS: Amazon Elastic Container Service (ECS) and Amazon Elastic Kubernetes Service (EKS)<br>• Azure: Azure Container Instances and Azure Kubernetes Service (AKS)<br>• GCP: Cloud Run and Google Kubernetes Engine (GKE)"
         },
         {
+          "type": "image",
+          "src": "./images/amcloud-host-main-website-co.drawio.png",
+          "alt": "amcloud main website's co architecture"
+        },
+        {
           "type": "section",
           "title": "🌟 IV. The Benefits of Containers",
           "data": "• <strong>Portability</strong> 🚚: Containers can run on any system that has a container engine, whether it’s a laptop, an on-premises server, or a cloud platform. This makes migration and development much easier.<br>• <strong>Efficiency</strong> ⚡: They are lightweight and use fewer resources than traditional VMs. You can run many more containers on a single physical machine.<br>• <strong>Scalability</strong> 📈: It's very easy to scale applications by simply launching more container instances. Orchestration platforms automate this process.<br>• <strong>Consistency</strong> 🔁: The \"package everything\" approach ensures that the application behaves the same across all environments, from development to production."
